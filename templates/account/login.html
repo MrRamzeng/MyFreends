@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}
+    Войти
+{% endblock %}
+
+{% block content %}
+    <h3>Вход</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit">
+    </form>
+    <h3>Регистрация</h3>
+    <form action="{% url 'account_signup' %}" method="post">
+        {% csrf_token %}
+        <label for="first_name">Имя: </label>
+        <input type="text" id="first_name" name="first_name"><br>
+        <input type="text" id="last_name" name="last_name"><br>
+        <input type="date" id="id_birthday" name="birthday"><br>
+        <input type="email" id="email" name="email"><br>
+        <input type="password" id="password1" name="password1"><br>
+        <input type="password" id="password2" name="password2"><br>
+        <input type="submit">
+    </form>
+{% endblock content %}
