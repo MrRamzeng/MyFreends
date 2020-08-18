@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+    {% load static %}
+    <div class="page-header header-filter"
+         style="background-image: url('{% static "img/bg7.jpg" %}'); background-size: cover; background-position: top center;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 ml-auto mr-auto">
+                    <div class="card card-login">
+                        <form class="form" method="post">
+                            {% csrf_token %}
+                            <div class="card-header card-header-primary text-center">
+                                <h4 class="card-title">Регистрация</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">face</i>
+                                        </span>
+                                    </div>
+                                    {{ form.first_name }}
+                                </div>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">face</i>
+                                        </span>
+                                    </div>
+                                    {{ form.last_name }}
+                                </div>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                    {{ form.birthday }}
+                                </div>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">mail</i>
+                                        </span>
+                                    </div>
+                                    {{ form.email }}
+                                    {{ form.email.errors }}
+                                </div>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">lock_outline</i>
+                                        </span>
+                                    </div>
+                                    {{ form.password1 }}
+                                    {{ form.password1.errors }}
+                                </div>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">lock_outline</i>
+                                        </span>
+                                    </div>
+                                    {{ form.password2 }}
+                                    {{ form.password2.errors }}
+                                </div>
+
+                                <div class="footer text-center">
+                                    <a class="btn btn-primary btn-link btn-wd" href="{% url 'account_login' %}">Вход</a>
+                                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                                    <p class="description text-center">или</p>
+                                    <a href="#pablo" class="btn btn-just-icon btn-link">
+                                        <i class="fa fa-facebook-square"></i>
+                                    </a>
+                                    <a href="#pablo" class="btn btn-just-icon btn-link">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                    <a href="#pablo" class="btn btn-just-icon btn-link">
+                                        <i class="fa fa-google"></i>
+                                    </a>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

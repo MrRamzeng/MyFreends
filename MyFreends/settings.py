@@ -60,6 +60,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 ACCOUNT_FORMS = {
+    'login': 'user.forms.LoginForm',
     'signup': 'user.forms.SignupForm'
 }
 
