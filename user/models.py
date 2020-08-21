@@ -34,7 +34,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
         super(Account, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('account', args=(self.url, ))
+        return reverse('account', kwargs=(self.url))
 
     class Meta:
         verbose_name = 'Учетная запись'

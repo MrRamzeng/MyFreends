@@ -1,10 +1,16 @@
-from allauth.account.decorators import verified_email_required
-from django.shortcuts import render
-from django.views.generic import DetailView
+from django.shortcuts import redirect, render
 
-from user.models import Account
+from user.forms import AccountImageForm
 
 
-class AccountDetailView(DetailView):
-    model = Account
-    slug_field = 'url'
+def account(request, url):
+    if request.method == 'POST':
+        form = AccountImageForm(
+            request.POST, request.FILES, instance=request.user
+        )
+        if form.is_valid():
+            form.save()
+            return redirect('account', url)
+    else:
+        form = AccountImageForm()
+    return render(request, 'user/account_detail.html', {'form': form, 'account': 'account'})

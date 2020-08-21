@@ -1,3 +1,4 @@
+from PIL import Image
 from allauth.account import app_settings
 from allauth.account.forms import LoginForm
 from allauth.utils import set_form_field_order
@@ -12,7 +13,8 @@ class LoginForm(LoginForm):
         widget=forms.TextInput(
             attrs={
                 'id': 'password', 'class': 'form-control', 'type': 'password',
-                'name': 'password', 'required': True, 'placeholder': 'Пароль'
+                'name': 'password', 'required': True, 'placeholder': 'Пароль',
+                'autocomplete': 'off'
             }
         )
     )
@@ -31,7 +33,7 @@ class LoginForm(LoginForm):
         login_widget = forms.TextInput(attrs={
             'name': 'login', 'class': 'form-control', 'type': 'email',
             'placeholder': 'E-mail', 'required': True,
-            'autofocus': 'autofocus',
+            'autofocus': 'autofocus', 'autocomplete': 'off',
             'onkeyup': 'this.value = this.value.toLowerCase();'
         })
         login_field = forms.EmailField(label="E-mail",
@@ -48,6 +50,16 @@ def login(self, *args, **kwargs):
 
 
 class SignupForm(UserCreationForm):
+    email = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'id': 'email', 'class': 'form-control', 'type': 'email',
+                'name': 'email', 'required': True, 'autocomplete': 'off',
+                'placeholder': 'Адрес электронной почты',
+                'onkeyup': 'this.value = this.value.toLowerCase();'
+            }
+        )
+    )
     first_name = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -76,16 +88,6 @@ class SignupForm(UserCreationForm):
             }
         )
     )
-    email = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'id': 'email', 'class': 'form-control', 'type': 'email',
-                'name': 'email', 'required': True, 'autocomplete': 'off',
-                'placeholder': 'Адрес электронной почты',
-                'onkeyup': 'this.value = this.value.toLowerCase();'
-            }
-        )
-    )
     password1 = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
@@ -108,7 +110,35 @@ class SignupForm(UserCreationForm):
     class Meta:
         model = Account
         fields = (
-            'first_name', 'last_name', 'birthday', 'email', 'password1',
+            'email', 'first_name', 'last_name', 'birthday', 'password1',
             'password2'
         )
-        exclude = ('url',)
+
+
+class AccountImageForm(forms.ModelForm):
+    x = forms.FloatField(widget=forms.HiddenInput())
+    y = forms.FloatField(widget=forms.HiddenInput())
+    width = forms.FloatField(widget=forms.HiddenInput())
+    height = forms.FloatField(widget=forms.HiddenInput())
+
+    class Meta:
+        model = Account
+        fields = ('image', 'x', 'y', 'width', 'height')
+        widgets = {
+            'image': forms.FileInput(attrs={
+                'accept': 'image/*', 'class': 'custom-file-input',
+                'type': 'file'
+            })
+        }
+
+    def save(self):
+        account_image = super(AccountImageForm, self).save()
+        x = self.cleaned_data.get('x')
+        y = self.cleaned_data.get('y')
+        w = self.cleaned_data.get('width')
+        h = self.cleaned_data.get('height')
+        image = Image.open(account_image.image)
+        cropped_image = image.crop((x, y, w + x, h + y))
+        resized_image = cropped_image.resize((300, 300), Image.ANTIALIAS)
+        resized_image.save(account_image.image.path)
+        return account_image

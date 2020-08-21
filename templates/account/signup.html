@@ -1,8 +1,7 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
-    {% load static %}
-    <div class="page-header header-filter"
-         style="background-image: url('{% static "img/bg7.jpg" %}'); background-size: cover; background-position: top center;">
+<div class="page-header" style="background-image: url('{% static 'img/bg7.jpg' %}'); background-size: cover; background-position: top center;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6 ml-auto mr-auto">
@@ -12,7 +11,18 @@
                             <div class="card-header card-header-primary text-center">
                                 <h4 class="card-title">Регистрация</h4>
                             </div>
+
                             <div class="card-body">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">mail</i>
+                                        </span>
+                                    </div>
+                                    {{ form.email }}
+                                    {{ form.email.errors }}
+                                </div>
+
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -43,16 +53,6 @@
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
-                                            <i class="material-icons">mail</i>
-                                        </span>
-                                    </div>
-                                    {{ form.email }}
-                                    {{ form.email.errors }}
-                                </div>
-
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
                                             <i class="material-icons">lock_outline</i>
                                         </span>
                                     </div>
@@ -71,7 +71,7 @@
                                 </div>
 
                                 <div class="footer text-center">
-                                    <a class="btn btn-primary btn-link btn-wd" href="{% url 'account_login' %}">Вход</a>
+                                    <a class="btn btn-link" href="{% url 'login' %}">Вход</a>
                                     <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
                                     <p class="description text-center">или</p>
                                     <a href="#pablo" class="btn btn-just-icon btn-link">
@@ -84,6 +84,7 @@
                                         <i class="fa fa-google"></i>
                                     </a>
                                 </div>
+                            </div>
                         </form>
                     </div>
                 </div>
