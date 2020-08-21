@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    <div class="page-header" style="background-image: url('{% static 'img/bg7.jpg' %}'); background-size: cover; background-position: top center;">
+    <div class="page-header" style="background-image: url('{% static 'img/bg7.jpg' %}')">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6 ml-auto mr-auto">
@@ -37,9 +37,7 @@
                                         <label class="form-check-label">
                                             {{ form.remember }}
                                             Зампомнить меня
-                                            <span class="form-check-sign">
-                                                <span class="check"></span>
-                                            </span>
+                                            <span class="form-check-sign"><span class="check"></span></span>
                                         </label>
                                     </div>
                                 </div>
@@ -51,9 +49,11 @@
                                     <a href="#pablo" class="btn btn-just-icon btn-link">
                                         <i class="fa fa-facebook-square"></i>
                                     </a>
+
                                     <a href="#pablo" class="btn btn-just-icon btn-link">
                                         <i class="fa fa-twitter"></i>
                                     </a>
+
                                     <a href="#pablo" class="btn btn-just-icon btn-link">
                                         <i class="fa fa-google"></i>
                                     </a>

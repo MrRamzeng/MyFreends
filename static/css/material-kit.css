@@ -6407,7 +6407,7 @@ button.close {
 }
 
 .bg-primary {
-    background-color: #1b5e20!important;
+    background-color: #1b5e20 !important;
 }
 
 a.bg-primary:hover,
@@ -6543,7 +6543,7 @@ button.bg-dark:focus {
 }
 
 .border-primary {
-    border-color: #1b5e20!important;
+    border-color: #1b5e20 !important;
 }
 
 .border-secondary {
@@ -9343,7 +9343,7 @@ button.bg-dark:focus {
 }
 
 .text-primary {
-    color: #1b5e20!important;
+    color: #1b5e20 !important;
 }
 
 a.text-primary:hover,
@@ -14641,7 +14641,7 @@ textarea {
     padding: 0.625rem 0;
     margin-bottom: 20px;
     color: #fff;
-    background-color: #2e7d32!important;
+    background-color: #2e7d32 !important;
     box-shadow: 0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15);
 }
 
@@ -14768,7 +14768,7 @@ textarea {
 
 .navbar.bg-primary {
     color: #ffffff;
-    background-color: #1b5e20!important;
+    background-color: #1b5e20 !important;
     box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 12px -5px rgba(156, 39, 176, 0.46);
 }
 
@@ -15480,7 +15480,7 @@ h2.title {
 }
 
 .text-primary {
-    color: #1b5e20!important;
+    color: #1b5e20 !important;
 }
 
 .errorlist {
@@ -16634,7 +16634,7 @@ h2.title {
 }
 
 .progress .progress-bar.progress-bar-primary {
-    background: #1b5e20!important;
+    background: #1b5e20 !important;
 }
 
 .progress .progress-bar.progress-bar-info {

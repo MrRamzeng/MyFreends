@@ -13,4 +13,7 @@ def account(request, url):
             return redirect('account', url)
     else:
         form = AccountImageForm()
-    return render(request, 'user/account_detail.html', {'form': form, 'account': 'account'})
+    context = {'form': form, 'account': 'account'}
+    return render(
+        request, 'user/account_detail.html', context=context
+    )

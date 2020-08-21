@@ -1,213 +1,182 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}
     {{ request.user.first_name }} {{ request.user.last_name }}
 {% endblock title %}
 
 {% block content %}
-<div class="page-header header-filter" data-parallax="true"></div>
+    <div class="page-header header-filter" data-parallax="true"></div>
 
-<div class="main main-raised">
-    <div class="profile-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 ml-auto mr-auto">
-                   <div class="profile">
-                        <div class="avatar">
-                            <img src="{{ request.user.image.url }}" class="border rounded-circle border-primary">
-                            <form class="hover-container" method="post" enctype="multipart/form-data" id="formUpload">
-                                <div class="middle rounded-circle justify-content-center">
-                                    {% csrf_token %}
-                                    {% if  request.user.image == 'default.png' %}
-                                        <i class="material-icons">add_a_photo</i>
-                                    {% else %}
-                                        <i class="material-icons">
-                                            edit
-                                        </i>
-                                    {% endif %}
-                                    {{ form.media }}
-                                    {{ form.image }}
-                                    {{ form.x }}
-                                    {{ form.y }}
-                                    {{ form.width }}
-                                    {{ form.height }}
-                                </div>
-                            </form>
-                            <div class="modal fade" id="modalCrop">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <img src="" id="image" style="max-width: 100%;">
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <div class="btn-group pull-left" role="group">
-                                                <button type="button" class="btn js-zoom-in">
-                                                    <i class="material-icons">zoom_in</i>
-                                                </button>
-
-                                                <button type="button" class="btn js-zoom-out">
-                                                    <i class="material-icons">zoom_out</i>
+    <div class="main main-raised">
+        <div class="profile-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 ml-auto mr-auto">
+                        <div class="profile">
+                            <div class="avatar">
+                                <img src="{{ request.user.image.url }}" class="border rounded-circle border-primary">
+                                <form class="hover-container" method="post" enctype="multipart/form-data"
+                                      id="formUpload">
+                                    <div class="middle rounded-circle justify-content-center">
+                                        {% csrf_token %}
+                                        {% if  request.user.image == 'default.png' %}
+                                            <i class="material-icons">add_a_photo</i>
+                                        {% else %}
+                                            <i class="material-icons">edit</i>
+                                        {% endif %}
+                                        {{ form.media }}
+                                        {{ form.image }}
+                                        {{ form.x }}
+                                        {{ form.y }}
+                                        {{ form.width }}
+                                        {{ form.height }}
+                                    </div>
+                                </form>
+                                <div class="modal fade" id="modalCrop">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <button type="button" class="btn btn-primary js-crop-and-upload">Сохранить</button>
+
+                                            <div class="modal-body">
+                                                <img src="" id="image" style="max-width: 100%;">
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <div class="btn-group pull-left" role="group">
+                                                    <button type="button" class="btn js-zoom-in">
+                                                        <i class="material-icons">zoom_in</i>
+                                                    </button>
+
+                                                    <button type="button" class="btn js-zoom-out">
+                                                        <i class="material-icons">zoom_out</i>
+                                                    </button>
+                                                </div>
+                                                <button type="button" class="btn btn-primary js-crop-and-upload">
+                                                    Сохранить
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="name">
-                            <h3 class="title">
-                                {{ request.user.first_name }} {{ request.user.last_name }}
+                            <div class="name">
+                                <h3 class="title">
+                                    {{ request.user.first_name }} {{ request.user.last_name }}
+                                    {% if request.user.is_staff %}
+                                        <i class="material-icons verified">verified_user</i>
+                                    {% endif %}
+                                </h3>
                                 {% if request.user.is_staff %}
-                                    <i class="material-icons verified">verified_user</i>
+                                    <h6>Admin</h6>
                                 {% endif %}
-                            </h3>
-                            {% if request.user.is_staff %}
-                                <h6>Admin</h6>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="description text-center">
-                <p>Может быть здесь будет ваш статус :)</p>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 ml-auto mr-auto">
-                    <div class="profile-tabs">
-                      <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#images" role="tab" data-toggle="tab">
-                                <i class="material-icons">photo_library</i>
-                                Фото
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#videos" role="tab" data-toggle="tab">
-                                <i class="material-icons">video_library</i>
-                                Видео
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#music" role="tab" data-toggle="tab">
-                                <i class="material-icons">library_music</i>
-                                Музыка
-                            </a>
-                        </li>
-                      </ul>
-                    </div>
-                </div>
-            </div>
-    
-            <div class="tab-content tab-space">
-                <div class="tab-pane active text-center gallery" id="images">
-                    <div class="row">
-                        <div class="col-md-6 ml-auto">
-                            <img src="//images.unsplash.com/photo-1524498250077-390f9e378fc0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83079913579babb9d2c94a5941b2e69d&auto=format&fit=crop&w=751&q=80" class="rounded">
-                            <img src="//images.unsplash.com/photo-1528249227670-9ba48616014f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=66b8e7db17b83084f16fdeadfc93b95b&auto=format&fit=crop&w=357&q=80" class="rounded">
-                        </div>
-
-                        <div class="col-md-6 mr-auto">
-                            <img src="//images.unsplash.com/photo-1521341057461-6eb5f40b07ab?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=72da2f550f8cbd0ec252ad6fb89c96b2&auto=format&fit=crop&w=334&q=80" class="rounded">
-                            <img src="//images.unsplash.com/photo-1506667527953-22eca67dd919?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6326214b7ce18d74dde5e88db4a12dd5&auto=format&fit=crop&w=750&q=80" class="rounded">
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="tab-pane text-center gallery" id="videos">
-                    <div class="row">
-                        <div class="col-md-12 ml-auto">
-                            <img src="//images.unsplash.com/photo-1524498250077-390f9e378fc0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83079913579babb9d2c94a5941b2e69d&auto=format&fit=crop&w=751&q=80" class="rounded">
-                            <img src="//images.unsplash.com/photo-1506667527953-22eca67dd919?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6326214b7ce18d74dde5e88db4a12dd5&auto=format&fit=crop&w=750&q=80" class="rounded">
-                            <img src="//images.unsplash.com/photo-1505784045224-1247b2b29cf3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ec2bdc92a9687b6af5089b335691830e&auto=format&fit=crop&w=750&q=80" class="rounded">
-                        </div>
+                <div class="description text-center">
+                    <p>Может быть здесь будет ваш статус :)</p>
+                </div>
 
-                        <div class="col-md-12 mr-auto">
-                            <img src="//images.unsplash.com/photo-1504346466600-714572c4b726?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6754ded479383b7e3144de310fa88277&auto=format&fit=crop&w=750&q=80" class="rounded">
-                            <img src="//images.unsplash.com/photo-1494028698538-2cd52a400b17?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83bf0e71786922a80c420c17b664a1f5&auto=format&fit=crop&w=334&q=80" class="rounded">
+                <div class="row">
+                    <div class="col-md-6 ml-auto mr-auto">
+                        <div class="profile-tabs">
+                            <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#images" role="tab" data-toggle="tab">
+                                        <i class="material-icons">photo_library</i>
+                                        Фото
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#videos" role="tab" data-toggle="tab">
+                                        <i class="material-icons">video_library</i>
+                                        Видео
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#music" role="tab" data-toggle="tab">
+                                        <i class="material-icons">library_music</i>
+                                        Музыка
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                
-                <div class="tab-pane text-center gallery" id="music">
-                    <div class="row">
-                        <div class="col-md-3 ml-auto">
-                            <img src="//images.unsplash.com/photo-1504346466600-714572c4b726?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6754ded479383b7e3144de310fa88277&auto=format&fit=crop&w=750&q=80" class="rounded">
-                            <img src="//images.unsplash.com/photo-1494028698538-2cd52a400b17?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83bf0e71786922a80c420c17b664a1f5&auto=format&fit=crop&w=334&q=80" class="rounded">
-                        </div>
 
-                        <div class="col-md-3 mr-auto">
-                            <img src="//images.unsplash.com/photo-1505784045224-1247b2b29cf3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ec2bdc92a9687b6af5089b335691830e&auto=format&fit=crop&w=750&q=80" class="rounded">  					
-                            <img src="//images.unsplash.com/photo-1524498250077-390f9e378fc0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83079913579babb9d2c94a5941b2e69d&auto=format&fit=crop&w=751&q=80" class="rounded">
-                            <img src="//images.unsplash.com/photo-1506667527953-22eca67dd919?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6326214b7ce18d74dde5e88db4a12dd5&auto=format&fit=crop&w=750&q=80" class="rounded">
+                <div class="tab-content tab-space">
+                    <div class="tab-pane active text-center gallery" id="images">
+                        <div class="row">
+                            <div class="col-md-6 ml-auto">
+                                <img src="//images.unsplash.com/photo-1524498250077-390f9e378fc0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83079913579babb9d2c94a5941b2e69d&auto=format&fit=crop&w=751&q=80"
+                                     class="rounded">
+                                <img src="//images.unsplash.com/photo-1528249227670-9ba48616014f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=66b8e7db17b83084f16fdeadfc93b95b&auto=format&fit=crop&w=357&q=80"
+                                     class="rounded">
+                            </div>
+
+                            <div class="col-md-6 mr-auto">
+                                <img src="//images.unsplash.com/photo-1521341057461-6eb5f40b07ab?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=72da2f550f8cbd0ec252ad6fb89c96b2&auto=format&fit=crop&w=334&q=80"
+                                     class="rounded">
+                                <img src="//images.unsplash.com/photo-1506667527953-22eca67dd919?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6326214b7ce18d74dde5e88db4a12dd5&auto=format&fit=crop&w=750&q=80"
+                                     class="rounded">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane text-center gallery" id="videos">
+                        <div class="row">
+                            <div class="col-md-12 ml-auto">
+                                <img src="//images.unsplash.com/photo-1524498250077-390f9e378fc0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83079913579babb9d2c94a5941b2e69d&auto=format&fit=crop&w=751&q=80"
+                                     class="rounded">
+                                <img src="//images.unsplash.com/photo-1506667527953-22eca67dd919?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6326214b7ce18d74dde5e88db4a12dd5&auto=format&fit=crop&w=750&q=80"
+                                     class="rounded">
+                                <img src="//images.unsplash.com/photo-1505784045224-1247b2b29cf3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ec2bdc92a9687b6af5089b335691830e&auto=format&fit=crop&w=750&q=80"
+                                     class="rounded">
+                            </div>
+
+                            <div class="col-md-12 mr-auto">
+                                <img src="//images.unsplash.com/photo-1504346466600-714572c4b726?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6754ded479383b7e3144de310fa88277&auto=format&fit=crop&w=750&q=80"
+                                     class="rounded">
+                                <img src="//images.unsplash.com/photo-1494028698538-2cd52a400b17?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83bf0e71786922a80c420c17b664a1f5&auto=format&fit=crop&w=334&q=80"
+                                     class="rounded">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane text-center gallery" id="music">
+                        <div class="row">
+                            <div class="col-md-3 ml-auto">
+                                <img src="//images.unsplash.com/photo-1504346466600-714572c4b726?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6754ded479383b7e3144de310fa88277&auto=format&fit=crop&w=750&q=80"
+                                     class="rounded">
+                                <img src="//images.unsplash.com/photo-1494028698538-2cd52a400b17?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83bf0e71786922a80c420c17b664a1f5&auto=format&fit=crop&w=334&q=80"
+                                     class="rounded">
+                            </div>
+
+                            <div class="col-md-3 mr-auto">
+                                <img src="//images.unsplash.com/photo-1505784045224-1247b2b29cf3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ec2bdc92a9687b6af5089b335691830e&auto=format&fit=crop&w=750&q=80"
+                                     class="rounded">
+                                <img src="//images.unsplash.com/photo-1524498250077-390f9e378fc0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83079913579babb9d2c94a5941b2e69d&auto=format&fit=crop&w=751&q=80"
+                                     class="rounded">
+                                <img src="//images.unsplash.com/photo-1506667527953-22eca67dd919?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6326214b7ce18d74dde5e88db4a12dd5&auto=format&fit=crop&w=750&q=80"
+                                     class="rounded">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock content %}
 
 {% block javascript %}
-    <script>
-        $(function () {
-            $("#id_image").change(function () {
-                if (this.files && this.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $("#image").attr("src", e.target.result);
-                        $("#modalCrop").modal("show");
-                    }
-                    reader.readAsDataURL(this.files[0]);
-                }
-            });
-            var $image = $("#image");
-            var cropBoxData;
-            var canvasData;
-            $("#modalCrop").on("shown.bs.modal", function () {
-                $image.cropper({
-                    viewMode: 1,
-                    aspectRatio: 1 / 1,
-                    minCropBoxWidth: 200,
-                    minCropBoxHeight: 200,
-                    ready: function () {
-                        $image.cropper("setCanvasData", canvasData);
-                        $image.cropper("setCropBoxData", cropBoxData);
-                    }
-                });
-            }).on("hidden.bs.modal", function () {
-                cropBoxData = $image.cropper("getCropBoxData");
-                canvasData = $image.cropper("getCanvasData");
-                $image.cropper("destroy");
-            });
-            $(".js-zoom-in").click(function () {
-                $image.cropper("zoom", 0.1);
-            });
-            $(".js-zoom-out").click(function () {
-                $image.cropper("zoom", -0.1);
-            });
-            $(".js-crop-and-upload").click(function () {
-                var cropData = $image.cropper("getData");
-                $("#id_x").val(cropData["x"]);
-                $("#id_y").val(cropData["y"]);
-                $("#id_height").val(cropData["height"]);
-                $("#id_width").val(cropData["width"]);
-                $("#formUpload").submit();
-            });
-
-        });
-    </script>
-
+    <script src="{% static 'js/crop.js' %}" type="text/javascript"></script>
 {% endblock javascript %}
