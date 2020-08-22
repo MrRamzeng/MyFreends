@@ -24,7 +24,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 ]
 
-AUTH_USER_MODEL = 'user.Account'
+AUTH_USER_MODEL = 'user.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,7 +64,7 @@ ACCOUNT_FORMS = {
     'signup': 'user.forms.SignupForm'
 }
 
-ACCOUNT_ADAPTER = 'user.adapter.AccountAdapter'
+ACCOUNT_ADAPTER = 'user.adapter.UserAdapter'
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 
@@ -104,7 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LOGIN_URL = '/'
 
-LOGIN_REDIRECT_URL = 'account'
+LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/'
 

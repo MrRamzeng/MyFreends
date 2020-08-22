@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class UserConfig(AppConfig):
     name = 'user'
-    verbose_name = 'Учетная запись'
+    verbose_name = 'Пользователь'

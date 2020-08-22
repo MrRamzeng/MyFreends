@@ -5,7 +5,6 @@
         <meta charset="UTF-8">
         <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
-        <!-- <link rel="stylesheet" href="//unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous"> -->
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css"
               href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
@@ -18,13 +17,13 @@
         </title>
     </head>
 
-    <body {% if account %} class="profile-page" {% endif %}>
-        {% if request.path != '/' and request.path != '/signup/' %}
+    <body {% if userPage %} class="profile-page" {% endif %}>
+        {% if user.is_authenticated %}
             <nav class="navbar navbar-color-on-scroll navbar-transparent fixed-top navbar-expand-lg "
                  color-on-scroll="220" id="sectionsNav">
                 <div class="container">
                     <div class="navbar-translate">
-                        <a class="navbar-brand" href="{% url 'account' request.user.url %}"></a>
+                        <a class="navbar-brand" href="{% url 'user' request.user.url %}"></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false">
                             <span class="navbar-toggler-icon"></span>
                             <span class="navbar-toggler-icon"></span>
@@ -35,7 +34,7 @@
                     <div class="collapse navbar-collapse">
                         <ul class="navbar-nav ml-auto">
                             <li class="dropdown nav-item">
-                                <a href="{% url 'account' request.user.url %}" class="nav-link">
+                                <a href="{% url 'user' request.user.url %}" class="nav-link">
                                     <i class="material-icons">home</i> Мой профиль
                                 </a>
                             </li>
@@ -62,7 +61,7 @@
                             {% endif %}
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'account_logout' %}">
+                                <a class="nav-link" href="{% url 'logout' %}">
                                     <i class="material-icons">exit_to_app</i>
                                 </a>
                             </li>

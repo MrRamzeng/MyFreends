@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.safestring import mark_safe
 
-from user.models import Account
+from user.models import User
 
 
 class EmailInlines(admin.TabularInline):
@@ -17,9 +17,9 @@ class EmailInlines(admin.TabularInline):
         return False
 
 
-@admin.register(Account)
+@admin.register(User)
 class CustomAdmin(UserAdmin):
-    model = Account
+    model = User
     list_display = (
         'get_image', 'first_name', 'last_name', 'birthday', 'email', 'url',
         'is_staff'
@@ -49,4 +49,4 @@ class CustomAdmin(UserAdmin):
     def get_image(self, obj):
         return mark_safe(f'<img src={obj.image.url} width="250" height="auto">')
 
-    get_image.short_description = 'Изображение профиля'
+    get_image.short_description = 'Изображение пользователя'

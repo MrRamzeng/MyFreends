@@ -5,7 +5,7 @@ from allauth.utils import set_form_field_order
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from user.models import Account
+from user.models import User
 
 
 class LoginForm(LoginForm):
@@ -108,21 +108,21 @@ class SignupForm(UserCreationForm):
     )
 
     class Meta:
-        model = Account
+        model = User
         fields = (
             'email', 'first_name', 'last_name', 'birthday', 'password1',
             'password2'
         )
 
 
-class AccountImageForm(forms.ModelForm):
+class UserImageForm(forms.ModelForm):
     x = forms.FloatField(widget=forms.HiddenInput())
     y = forms.FloatField(widget=forms.HiddenInput())
     width = forms.FloatField(widget=forms.HiddenInput())
     height = forms.FloatField(widget=forms.HiddenInput())
 
     class Meta:
-        model = Account
+        model = User
         fields = ('image', 'x', 'y', 'width', 'height')
         widgets = {
             'image': forms.FileInput(attrs={
@@ -132,13 +132,13 @@ class AccountImageForm(forms.ModelForm):
         }
 
     def save(self):
-        account_image = super(AccountImageForm, self).save()
+        user_image = super(UserImageForm, self).save()
         x = self.cleaned_data.get('x')
         y = self.cleaned_data.get('y')
         w = self.cleaned_data.get('width')
         h = self.cleaned_data.get('height')
-        image = Image.open(account_image.image)
+        image = Image.open(user_image.image)
         cropped_image = image.crop((x, y, w + x, h + y))
         resized_image = cropped_image.resize((300, 300), Image.ANTIALIAS)
-        resized_image.save(account_image.image.path)
-        return account_image
+        resized_image.save(user_image.image.path)
+        return user_image

@@ -14,7 +14,7 @@
                     <div class="col-md-3 ml-auto mr-auto">
                         <div class="profile">
                             <div class="avatar">
-                                <img src="{{ request.user.image.url }}" class="border rounded-circle border-primary">
+                                <img src="{{ request.user.image.url }}" id="profileImage" class="border rounded-circle border-primary">
                                 <form class="hover-container" method="post" enctype="multipart/form-data"
                                       id="formUpload">
                                     <div class="middle rounded-circle justify-content-center">
@@ -32,12 +32,13 @@
                                         {{ form.height }}
                                     </div>
                                 </form>
-                                <div class="modal fade" id="modalCrop">
-                                    <div class="modal-dialog">
+                                
+                                <div class="modal fade" id="modalCrop" role="dialog" aria-labelledby="modalCropLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
+                                                <h5 class="modal-title" id="modalCropLabel">Редактирование изображения</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>

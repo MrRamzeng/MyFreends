@@ -6,11 +6,11 @@ from django.utils.crypto import get_random_string
 from user.managers import CustomStaffManager
 
 
-def account_image(instance, filename):
+def user_image(instance, filename):
     return '%s/image/%s' % (instance.url, filename)
 
 
-class Account(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin):
     url = models.SlugField('url', max_length=20, unique=True)
     email = models.EmailField(
         'Адрес электронной почты', max_length=254, unique=True
@@ -19,7 +19,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField('Фамилия', max_length=50)
     birthday = models.DateField('Дата рождения')
     image = models.ImageField(
-        'Фото', upload_to=account_image, default='default.png'
+        'Фото', upload_to=user_image, default='default.png'
     )
     objects = CustomStaffManager()
     is_staff = models.BooleanField('Персонал', default=False)
@@ -31,10 +31,10 @@ class Account(AbstractBaseUser, PermissionsMixin):
     def save(self, *args, **kwargs):
         if self.url == '':
             self.url = get_random_string(6)
-        super(Account, self).save(*args, **kwargs)
+        super(User, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('account', kwargs=(self.url))
+        return reverse('user', kwargs=(self.url))
 
     class Meta:
         verbose_name = 'Учетная запись'

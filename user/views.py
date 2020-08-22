@@ -1,19 +1,19 @@
 from django.shortcuts import redirect, render
 
-from user.forms import AccountImageForm
+from user.forms import UserImageForm
 
 
-def account(request, url):
+def user(request, url):
     if request.method == 'POST':
-        form = AccountImageForm(
+        form = UserImageForm(
             request.POST, request.FILES, instance=request.user
         )
         if form.is_valid():
             form.save()
-            return redirect('account', url)
+            return redirect('user', url)
     else:
-        form = AccountImageForm()
-    context = {'form': form, 'account': 'account'}
+        form = UserImageForm()
+    context = {'form': form, 'userPage': True}
     return render(
-        request, 'user/account_detail.html', context=context
+        request, 'user/user_detail.html', context=context
     )
