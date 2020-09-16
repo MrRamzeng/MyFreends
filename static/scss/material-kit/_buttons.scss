@@ -158,7 +158,7 @@
 }
 
 
-// Align icons inside buttons with text
+// Align icons inside submenu with text
 .btn .material-icons,
 .btn:not(.btn-just-icon):not(.btn-fab) .fa {
   position: relative;
@@ -170,18 +170,18 @@
   vertical-align: middle;
 }
 
-// Disabled buttons and button groups
+// Disabled submenu and button groups
 .btn,
 .input-group-btn .btn,
 .btn-group,
 .btn-group-vertical {
-  // have to ratchet up the specificity to kill drop shadows on disabled raised buttons
+  // have to ratchet up the specificity to kill drop shadows on disabled raised submenu
   @include bmd-disabled() {
     .bg-inverse & {
       color: $bmd-inverse-btn-disabled;
     }
 
-    // flat buttons shouldn't lose transparency on disabled hover/focus
+    // flat submenu shouldn't lose transparency on disabled hover/focus
   }
 }
 
@@ -206,7 +206,7 @@
     margin: 0;
   }
 
-  // remove margin from nested btn-group(s) to properly align them with the outer buttons
+  // remove margin from nested btn-group(s) to properly align them with the outer submenu
   > .btn-group {
     margin: 0;
   }

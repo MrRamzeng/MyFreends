@@ -10301,8 +10301,9 @@ button:focus {
 .btn.btn-default.btn-link:hover,
 .btn.btn-default.btn-link:focus,
 .btn.btn-default.btn-link:active {
-    background-color: transparent;
+    background-color: #f5f5f5;
     color: #999999;
+    box-shadow: 0 2px 2px 0 rgba(153, 153, 153, 0.2)
 }
 
 .btn.btn-white,
@@ -16996,11 +16997,11 @@ footer .pull-center {
     border: 0;
     margin-bottom: 30px;
     margin-top: 30px;
-    border-radius: 6px;
+    border-radius: 15px;
     color: rgba(0, 0, 0, 0.87);
     background: #ffffff;
     width: 100%;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 6px 8px 2px rgba(0, 0, 0, 0.14), 0 6px 10px 5px rgba(0, 0, 0, 0.12), 0 4px 5px -5px rgba(0, 0, 0, 0.2)
 }
 
 .card .card-category:not([class*="text-"]) {
@@ -17036,7 +17037,7 @@ footer .pull-center {
 
 .card .card-body,
 .card .card-footer {
-    padding: 0.9375rem 1.875rem;
+    padding: 0.6rem 10px;
 }
 
 .card .card-body + .card-footer {
@@ -17267,6 +17268,10 @@ footer .pull-center {
     overflow: hidden;
     border-radius: 50%;
     margin-right: 5px;
+}
+
+.btn-card {
+    padding: 10px 15px;
 }
 
 .hover-container {
@@ -19152,6 +19157,22 @@ footer .pull-center {
 ::-webkit-scrollbar-thumb:hover {
     background: #32465a;
     border-radius: 6px;
+}
+
+.card .card-image {
+    position: relative;
+}
+
+.card .card-image .card-title {
+    color: #fff;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.2);
+    bottom: 0;
+    left: 0;
+    margin-bottom: 0 !important;
+    cursor: pointer;
+    max-width: 100%;
+    padding: 10px;
 }
 
 /*# sourceMappingURL=material-kit.css.map */

@@ -1,0 +1,38 @@
+{% if sent_requests %}
+    <div id="collapseSent" class="collapse" aria-labelledby="users" data-parent="#accordion">
+        <div class="row">
+            {% for sent_request in sent_requests %}
+                <div class="col-md-3">
+                    <div class="card mb-0">
+                        <div class="card-image">
+                            <img class="card-img-top" src="{{ sent_request.to_user.image.url }}" alt="Card image cap">
+                            <a class="btn-link card-title" href="{% url 'view_profile' url=sent_request.to_user.url %}">
+                                {{ sent_request.to_user.first_name }} {{ sent_request.to_user.last_name }}
+                                {% if sent_request.to_user.is_staff %}
+                                    <i class="material-icons verified">verified_user</i>
+                                {% endif %}
+                            </a>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="card-text">
+                                <a class="btn btn-card btn-primary" href="url 'chat'">
+                                    <i class="material-icons">message</i>
+                                </a>
+
+                                <a class="btn btn-card btn-primary"
+                                   href="{% url 'cancel_request' url=sent_request.to_user.url %}">
+                                    <i class="material-icons">close</i>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <div id="collapseSent" class="collapse" aria-labelledby="users" data-parent="#accordion">
+        <p>Вы не отправили ни одного запроса</p>
+    </div>
+{% endif %}

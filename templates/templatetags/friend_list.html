@@ -1,0 +1,44 @@
+{% if friend_list %}
+    <div id="collapseFriends" class="collapse show" aria-labelledby="friends" data-parent="#accordion">
+        <div class="row">
+            {% for friend in friend_list %}
+                <div class="col-md-3">
+                    <div class="card mb-0">
+                        <div class="card-image">
+                            <img class="card-img-top" src="{{ friend.image.url }}"
+                                 alt="Card image cap">
+                            <a class="btn-link card-title"
+                               href="{% url 'view_profile' url=friend.url %}">
+                                {{ friend.first_name }} {{ friend.last_name }}
+                                {% if friend.is_staff %}
+                                    <i class="material-icons verified">verified_user</i>
+                                {% endif %}
+                            </a>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="card-text">
+                                <a class="btn btn-card btn-primary" href="{# {% url 'chat' %} #}">
+                                    <i class="material-icons">message</i>
+                                </a>
+
+                                <a class="btn btn-card btn-primary"
+                                   href="{% url 'remove_friend' url=friend.url %}">
+                                    <i class="fa fa-user-times"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <div id="collapseFriends" class="collapse show" aria-labelledby="friends" data-parent="#accordion">
+        <p>У вас пока нет друзей.</p>
+        <button id="users" class="btn" data-toggle="collapse" data-target="#collapseUsers"
+                aria-expanded="true" aria-controls="collapseUsers">
+            Найти?
+        </button>
+    </div>
+{% endif %}

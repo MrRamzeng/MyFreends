@@ -1,0 +1,50 @@
+{% if requests_received %}
+    <div id="collapseReceived" class="collapse" aria-labelledby="users" data-parent="#accordion">
+        <div class="row">
+            {% for request_received in requests_received %}
+                <div class="col-md-3">
+                    <div class="card mb-0">
+                        <div class="card-image">
+                            <img class="card-img-top" src="{{ request_received.from_user.image.url }}"
+                                 alt="Card image cap">
+                            <a class="btn-link card-title"
+                               href="{% url 'view_profile' url=request_received.from_user.url %}">
+                                {{ request_received.from_user.first_name }} {{ request_received.from_user.last_name }}
+                                {% if request_received.from_user.is_staff %}
+                                    <i class="material-icons verified">verified_user</i>
+                                {% endif %}
+                            </a>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="card-text">
+                                <a class="btn btn-card btn-primary" href="url 'chat'">
+                                    <i class="material-icons">message</i>
+                                </a>
+
+                                <a class="btn btn-card btn-primary"
+                                   href="{% url 'accept_friend_request' url=request_received.from_user.url %}">
+                                    <i class="material-icons">person_add</i>
+                                </a>
+
+                                <a class="btn btn-card btn-primary"
+                                   href="{% url 'reject_friend_request' url=request_received.from_user.url %}">
+                                    <i class="material-icons">person_remove</i>
+                                </a>
+
+                                <a class="btn btn-card btn-primary"
+                                   href="{% url 'add_block' url=request_received.from_user.url %}">
+                                    <i class="material-icons">pan_tool</i>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <div id="collapseReceived" class="collapse" aria-labelledby="users" data-parent="#accordion">
+        <p>Нет предложений дружбы.</p>
+    </div>
+{% endif %}

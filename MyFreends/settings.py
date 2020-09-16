@@ -18,10 +18,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.sites',
     'django.contrib.staticfiles',
-    'user',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'friendship',
+    'user',
 ]
 
 AUTH_USER_MODEL = 'user.User'

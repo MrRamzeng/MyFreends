@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load friendshiptags %}
+{% block title %}
+    Пользователи
+{% endblock title %}
+
+{% block content %}
+    <div id="accordion" class="container" style="margin-top: 100px;">
+        <div id="submenu">
+            <button id="friends" class="btn btn-primary" data-toggle="collapse" data-target="#collapseFriends"
+                    aria-expanded="true" aria-controls="collapseFriends">
+                Друзья
+            </button>
+
+            <button id="sent" class="btn btn-primary" data-toggle="collapse" data-target="#collapseSent"
+                    aria-expanded="true" aria-controls="collapseSent">
+                Отправленные запросы
+            </button>
+
+            <button id="received" class="btn btn-primary" data-toggle="collapse" data-target="#collapseReceived"
+                    aria-expanded="true" aria-controls="collapseReceived">
+                Полученные запросы
+            </button>
+
+            <button id="users" class="btn btn-primary" data-toggle="collapse" data-target="#collapseUsers"
+                    aria-expanded="true" aria-controls="collapseUsers">
+                Найти друзей
+            </button>
+        </div>
+        {% friends request.user %}
+        {% user_sent_requests request.user %}
+        {% user_requests_received request.user %}
+        {% users request.user %}
+    </div>
+{% endblock content %}

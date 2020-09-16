@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 
 from user.forms import UserImageForm
+from user.models import User
 
 
 def user(request, url):
@@ -14,6 +15,4 @@ def user(request, url):
     else:
         form = UserImageForm()
     context = {'form': form, 'userPage': True}
-    return render(
-        request, 'user/user_detail.html', context=context
-    )
+    return render(request, 'user/user_detail.html', context)

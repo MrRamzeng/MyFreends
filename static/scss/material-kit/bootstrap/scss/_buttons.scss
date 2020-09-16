@@ -57,7 +57,7 @@ fieldset:disabled a.btn {
 
 
 //
-// Alternate buttons
+// Alternate submenu
 //
 
 @each $color, $value in $theme-colors {
@@ -74,7 +74,7 @@ fieldset:disabled a.btn {
 
 
 //
-// Link buttons
+// Link submenu
 //
 
 // Make a button look and behave like a link
@@ -127,7 +127,7 @@ fieldset:disabled a.btn {
   display: block;
   width: 100%;
 
-  // Vertically space out multiple block buttons
+  // Vertically space out multiple block submenu
   + .btn-block {
     margin-top: $btn-block-spacing-y;
   }

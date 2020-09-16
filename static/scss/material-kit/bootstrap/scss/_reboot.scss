@@ -424,7 +424,7 @@ progress {
   vertical-align: baseline; // Add the correct vertical alignment in Chrome, Firefox, and Opera.
 }
 
-// Correct the cursor style of increment and decrement buttons in Chrome.
+// Correct the cursor style of increment and decrement submenu in Chrome.
 [type="number"]::-webkit-inner-spin-button,
 [type="number"]::-webkit-outer-spin-button {
   height: auto;
@@ -440,7 +440,7 @@ progress {
 }
 
 //
-// Remove the inner padding and cancel buttons in Chrome and Safari on macOS.
+// Remove the inner padding and cancel submenu in Chrome and Safari on macOS.
 //
 
 [type="search"]::-webkit-search-cancel-button,

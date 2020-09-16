@@ -33,13 +33,13 @@
       total: 0, //total of sharing
       shorterTotal: true, //show total by k or M when number is to big
       enableHover: true, //disable if you want to personalize hover event with callback
-      enableCounter: true, //disable if you just want use buttons
+      enableCounter: true, //disable if you just want use submenu
       enableTracking: false, //tracking with google analitycs
       hover: function() {}, //personalize hover event with this callback function
       hide: function() {}, //personalize hide event with this callback function
       click: function() {}, //personalize click event with this callback function
       render: function() {}, //personalize render event with this callback function
-      buttons: { //settings for buttons
+      buttons: { //settings for submenu
         googlePlus: { //http://www.google.com/webmasters/+1/button/
           url: '', //if you need to personnalize button url
           urlCount: false, //if you want to use personnalize button url on global counter
@@ -114,13 +114,13 @@
       linkedin: "http://www.linkedin.com/countserv/count/share?format=jsonp&url={url}&callback=?",
       pinterest: "http://api.pinterest.com/v1/urls/count.json?url={url}&callback=?"
     },
-    /* Load share buttons asynchronously
+    /* Load share submenu asynchronously
     ================================================== */
     loadButton = {
       googlePlus: function(self) {
         var sett = self.options.buttons.googlePlus;
-        //$(self.element).find('.buttons').append('<div class="button googleplus"><g:plusone size="'+self.options.buttons.googlePlus.size+'" href="'+self.options.url+'"></g:plusone></div>');
-        $(self.element).find('.buttons').append('<div class="button googleplus"><div class="g-plusone" data-size="' + sett.size + '" data-href="' + (sett.url !== '' ? sett.url : self.options.url) + '" data-annotation="' + sett.annotation + '"></div></div>');
+        //$(self.element).find('.submenu').append('<div class="button googleplus"><g:plusone size="'+self.options.submenu.googlePlus.size+'" href="'+self.options.url+'"></g:plusone></div>');
+        $(self.element).find('.submenu').append('<div class="button googleplus"><div class="g-plusone" data-size="' + sett.size + '" data-href="' + (sett.url !== '' ? sett.url : self.options.url) + '" data-annotation="' + sett.annotation + '"></div></div>');
         window.___gcfg = {
           lang: self.options.buttons.googlePlus.lang
         };
@@ -141,7 +141,7 @@
       },
       facebook: function(self) {
         var sett = self.options.buttons.facebook;
-        $(self.element).find('.buttons').append('<div class="button facebook"><div id="fb-root"></div><div class="fb-like" data-href="' + (sett.url !== '' ? sett.url : self.options.url) + '" data-send="' + sett.send + '" data-layout="' + sett.layout + '" data-width="' + sett.width + '" data-show-faces="' + sett.faces + '" data-action="' + sett.action + '" data-colorscheme="' + sett.colorscheme + '" data-font="' + sett.font + '" data-via="' + sett.via + '"></div></div>');
+        $(self.element).find('.submenu').append('<div class="button facebook"><div id="fb-root"></div><div class="fb-like" data-href="' + (sett.url !== '' ? sett.url : self.options.url) + '" data-send="' + sett.send + '" data-layout="' + sett.layout + '" data-width="' + sett.width + '" data-show-faces="' + sett.faces + '" data-action="' + sett.action + '" data-colorscheme="' + sett.colorscheme + '" data-font="' + sett.font + '" data-via="' + sett.via + '"></div></div>');
         var loading = 0;
         if (typeof FB === 'undefined' && loading == 0) {
           loading = 1;
@@ -161,7 +161,7 @@
       },
       twitter: function(self) {
         var sett = self.options.buttons.twitter;
-        $(self.element).find('.buttons').append('<div class="button twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url="' + (sett.url !== '' ? sett.url : self.options.url) + '" data-count="' + sett.count + '" data-text="' + self.options.text + '" data-via="' + sett.via + '" data-hashtags="' + sett.hashtags + '" data-related="' + sett.related + '" data-lang="' + sett.lang + '">Tweet</a></div>');
+        $(self.element).find('.submenu').append('<div class="button twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url="' + (sett.url !== '' ? sett.url : self.options.url) + '" data-count="' + sett.count + '" data-text="' + self.options.text + '" data-via="' + sett.via + '" data-hashtags="' + sett.hashtags + '" data-related="' + sett.related + '" data-lang="' + sett.lang + '">Tweet</a></div>');
         var loading = 0;
         if (typeof twttr === 'undefined' && loading == 0) {
           loading = 1;
@@ -183,7 +183,7 @@
       },
       digg: function(self) {
         var sett = self.options.buttons.digg;
-        $(self.element).find('.buttons').append('<div class="button digg"><a class="DiggThisButton ' + sett.type + '" rel="nofollow external" href="http://digg.com/submit?url=' + encodeURIComponent((sett.url !== '' ? sett.url : self.options.url)) + '"></a></div>');
+        $(self.element).find('.submenu').append('<div class="button digg"><a class="DiggThisButton ' + sett.type + '" rel="nofollow external" href="http://digg.com/submit?url=' + encodeURIComponent((sett.url !== '' ? sett.url : self.options.url)) + '"></a></div>');
         var loading = 0;
         if (typeof __DBW === 'undefined' && loading == 0) {
           loading = 1;
@@ -192,7 +192,7 @@
               s1 = document.getElementsByTagName('SCRIPT')[0];
             s.type = 'text/javascript';
             s.async = true;
-            s.src = '//widgets.digg.com/buttons.js';
+            s.src = '//widgets.digg.com/submenu.js';
             s1.parentNode.insertBefore(s, s1);
           })();
         }
@@ -211,7 +211,7 @@
         if (typeof count === "undefined") {
           count = 0;
         }
-        $(self.element).find('.buttons').append(
+        $(self.element).find('.submenu').append(
           '<div class="button delicious"><div style="' + css + 'font:12px Arial,Helvetica,sans-serif;cursor:pointer;color:#666666;display:inline-block;float:none;height:20px;line-height:normal;margin:0;padding:0;text-indent:0;vertical-align:baseline;">' +
           '<div style="' + cssCount + 'background-color:#fff;margin-bottom:5px;overflow:hidden;text-align:center;border:1px solid #ccc;border-radius:3px;">' + count + '</div>' +
           '<div style="' + cssShare + 'display:block;padding:0;text-align:center;text-decoration:none;width:50px;background-color:#7EACEE;border:1px solid #40679C;border-radius:3px;color:#fff;">' +
@@ -223,7 +223,7 @@
       },
       stumbleupon: function(self) {
         var sett = self.options.buttons.stumbleupon;
-        $(self.element).find('.buttons').append('<div class="button stumbleupon"><su:badge layout="' + sett.layout + '" location="' + (sett.url !== '' ? sett.url : self.options.url) + '"></su:badge></div>');
+        $(self.element).find('.submenu').append('<div class="button stumbleupon"><su:badge layout="' + sett.layout + '" location="' + (sett.url !== '' ? sett.url : self.options.url) + '"></su:badge></div>');
         var loading = 0;
         if (typeof STMBLPN === 'undefined' && loading == 0) {
           loading = 1;
@@ -247,7 +247,7 @@
       },
       linkedin: function(self) {
         var sett = self.options.buttons.linkedin;
-        $(self.element).find('.buttons').append('<div class="button linkedin"><script type="in/share" data-url="' + (sett.url !== '' ? sett.url : self.options.url) + '" data-counter="' + sett.counter + '"></script></div>');
+        $(self.element).find('.submenu').append('<div class="button linkedin"><script type="in/share" data-url="' + (sett.url !== '' ? sett.url : self.options.url) + '" data-counter="' + sett.counter + '"></script></div>');
         var loading = 0;
         if (typeof window.IN === 'undefined' && loading == 0) {
           loading = 1;
@@ -265,7 +265,7 @@
       },
       pinterest: function(self) {
         var sett = self.options.buttons.pinterest;
-        $(self.element).find('.buttons').append('<div class="button pinterest"><a href="http://pinterest.com/pin/create/button/?url=' + (sett.url !== '' ? sett.url : self.options.url) + '&media=' + sett.media + '&description=' + sett.description + '" class="pin-it-button" count-layout="' + sett.layout + '">Pin It</a></div>');
+        $(self.element).find('.submenu').append('<div class="button pinterest"><a href="http://pinterest.com/pin/create/button/?url=' + (sett.url !== '' ? sett.url : self.options.url) + '&media=' + sett.media + '&description=' + sett.description + '" class="pin-it-button" count-layout="' + sett.layout + '">Pin It</a></div>');
 
         (function() {
           var li = document.createElement('script');
@@ -365,7 +365,7 @@
     this.element = element;
 
     this.options = $.extend(true, {}, defaults, options);
-    this.options.share = options.share; //simple solution to allow order of buttons
+    this.options.share = options.share; //simple solution to allow order of submenu
 
     this._defaults = defaults;
     this._name = pluginName;
@@ -420,7 +420,7 @@
     //add hover event
     $(this.element).hover(function() {
       //load social button if enable and 1 time
-      if ($(this).find('.buttons').length === 0 && self.options.enableHover === true) {
+      if ($(this).find('.submenu').length === 0 && self.options.enableHover === true) {
         self.loadButtons();
       }
       self.options.hover(self, self.options);
@@ -439,7 +439,7 @@
   ================================================== */
   Plugin.prototype.loadButtons = function() {
     var self = this;
-    $(this.element).append('<div class="buttons"></div>');
+    $(this.element).append('<div class="submenu"></div>');
     $.each(self.options.share, function(name, val) {
       if (val == true) {
         loadButton[name](self);
