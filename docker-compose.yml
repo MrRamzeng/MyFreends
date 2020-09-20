@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+    web:
+        build: .
+        command: python manage.py runserver 0.0.0.0:8000
+        ports: 
+            - "8000:8000" 
+        depends_on:
+            - postgre
+            - redis
+        volumes:
+            - ./media:/code/media
+
+    postgre:
+        image: postgres:12.0-alpine
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=admin
+            - POSTGRES_PASSWORD=password
+            - POSTGRES_DB=mf
+    redis:
+        image: redis
+
+volumes:
+    postgres_data:
