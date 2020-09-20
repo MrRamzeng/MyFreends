@@ -1,26 +1,25 @@
-
-<div id="recipient" class="section">
-    <div class="row">
-        <a href="#{{ chat.id }}" class="active">
-            <div id="{{ chat.id }}" class="flex-data">
-                {% if chat.name %}
-                <img id="{{ chat.id }}" src="{{ chat.image.url }}" class="circle online" alt="">
-                <p id="{{ chat.id }}">{{ chat.name }}</p>
-                {% else %}
-
-                {% for user in chat.user_list.all %}
-
-                {% if user.id != request.user.id %}
-                <img id="{{ chat.id }}" class="circle online" src="{{ user.photo.url }}">
-                <p id="{{ chat.id }}">
-                    {{ user.first_name }} {{ user.last_name }}
-                </p>
-                {% endif %}
-
-                {% endfor %}
-
-                {% endif %}
-            </div>
-        </a>
-    </div>
-</div>
+{% if chat.name %}
+    <li class="person" data-chat="person1">
+        <div class="user">
+            <img src="{{ chat.image.url }}" alt="{{ chat.name }}">
+        </div>
+        <p class="name-time">
+            <span class="name">{{ chat.name }}</span>
+        </p>
+    </li>
+{% else %}
+    <a href="#{{ chat.id }}">
+        {% for user in chat.user_list.all %}
+            {% if user != request.user %}
+                <li id="{{ chat.id }}" class="person" data-chat="person1">
+                    <div id="{{ chat.id }}" class="user">
+                        <img id="{{ chat.id }}" src="{{ user.image.url }}" alt="{{ user.url }}">
+                    </div>
+                    <p id="{{ chat.id }}" class="name-time">
+                        <span id="{{ chat.id }}" class="name">{{ user.first_name }} {{ user.last_name }}</span>
+                    </p>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </a>
+{% endif %}

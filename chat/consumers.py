@@ -22,25 +22,25 @@ class ChatConsumer(WebsocketConsumer):
         author = User.objects.filter(id=user)[0]
         chat = data['chat']
         chat_id = Chat.objects.get(id=chat)
-        if 'smileId' in data:
-            message = Message.objects.create(
-                author=author,
-                chat_id=chat,
-                smile_id=data['smileId']
-            )
-        elif 'imgId' in data:
-            message = Message.objects.create(
-                author=author,
-                chat_id=chat,
-                content=data['message'],
-                img_id=data['imgId']
-            )
-        else:
-            message = Message.objects.create(
-                author=author, 
-                content=data['message'],
-                chat_id=chat
-            )
+        # if 'smileId' in data:
+        #     message = Message.objects.create(
+        #         author=author,
+        #         chat_id=chat,
+        #         smile_id=data['smileId']
+        #     )
+        # elif 'imgId' in data:
+        #     message = Message.objects.create(
+        #         author=author,
+        #         chat_id=chat,
+        #         content=data['message'],
+        #         img_id=data['imgId']
+        #     )
+        # else:
+        message = Message.objects.create(
+            author=author,
+            content=data['message'],
+            chat_id=chat
+        )
         content = {
             'command': 'new_message',
             'message': self.message_to_json(message)
@@ -56,7 +56,8 @@ class ChatConsumer(WebsocketConsumer):
     def message_to_json(self, message):
         content_json = {
             'author': message.author.id,
-            'author_image': message.author.photo.url,
+            'author_image': message.author.image.url,
+            'author_fname': message.author.first_name,
             'content': message.content,
             'timestamp': str(message.timestamp)
         }
@@ -89,9 +90,8 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data):
         data = json.loads(text_data)
         self.commands[data['command']](self, data)
-        
 
-    def send_chat_message(self, message):    
+    def send_chat_message(self, message):
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {

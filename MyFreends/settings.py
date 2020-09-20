@@ -1,5 +1,8 @@
 import os
 
+import django
+django.__path__[0] + ''
+
 from django.urls import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,6 +26,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'friendship',
     'user',
+    'chat',
+    'channels'
 ]
 
 AUTH_USER_MODEL = 'user.User'
@@ -77,10 +82,28 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
 WSGI_APPLICATION = 'MyFreends.wsgi.application'
 
+ASGI_APPLICATION = 'MyFreends.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('redis', 6379)],
+        }
+    },
+}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': 'postgre',
+        'PORT': 5432,
+        'NAME': 'mf',
+        'USER': 'admin',
+        'PASSWORD': 'password',
     }
 }
 

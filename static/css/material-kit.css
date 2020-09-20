@@ -1006,6 +1006,10 @@ pre code {
     margin-left: auto;
 }
 
+body > .container {
+    margin-top: 100px;
+}
+
 @media (min-width: 576px) {
     .container {
         max-width: 540px;
@@ -11597,12 +11601,12 @@ legend {
 }
 
 a {
-    color: #2e7d32;
+    color: #555;
 }
 
 a:hover,
 a:focus {
-    color: #89229b;
+    color: #000;
     text-decoration: none;
 }
 
@@ -16997,7 +17001,7 @@ footer .pull-center {
     border: 0;
     margin-bottom: 30px;
     margin-top: 30px;
-    border-radius: 15px;
+    border-radius: 7px;
     color: rgba(0, 0, 0, 0.87);
     background: #ffffff;
     width: 100%;
@@ -19140,23 +19144,23 @@ footer .pull-center {
 }
 
 ::-webkit-scrollbar {
-    width: 6px;
-    border-radius: 6px;
+    width: 2px;
+    border-radius: 2px;
 }
 
 ::-webkit-scrollbar-track {
     background: #9e9e9e;
-    border-radius: 6px;
+    border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb {
     background: #435f7a;
-    border-radius: 6px;
+    border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: #32465a;
-    border-radius: 6px;
+    border-radius: 2px;
 }
 
 .card .card-image {

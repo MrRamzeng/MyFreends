@@ -3,6 +3,7 @@
     {% load static %}
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
@@ -10,6 +11,9 @@
               href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
         <link href="{% static 'css/material-kit.css' %}" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/cropper.min.css' %}">
+        {% block css %}
+
+        {% endblock css %}
         <title>
             {% block title %}
                 MyFreends
@@ -46,7 +50,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{# {% url 'chat' %} #}">
+                                <a class="nav-link" href="{% url 'chat' %}">
                                     <i class="material-icons">chat</i> Сообщения
                                 </a>
                             </li>
@@ -85,7 +89,6 @@
         <script src="//buttons.github.io/buttons.js" type="text/javascript"></script>
         <script src="{% static 'js/material-kit.js' %}" type="text/javascript"></script>
         <script src="{% static 'js/cropper.min.js' %}" type="text/javascript"></script>
-        {#        <script src="{% static 'js/reconnecting-websocket.js' %}" type="text/javascript"></script>#}
 
         {% block javascript %}
         {% endblock javascript %}

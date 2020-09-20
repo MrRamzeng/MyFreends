@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+from chat.models import Chat
 from friendship.exceptions import AlreadyExistsError
 from friendship.signals import (
     friendship_request_created, friendship_request_rejected,
@@ -13,8 +14,6 @@ from friendship.signals import (
     friendship_request_accepted, friendship_removed, block_created,
     block_removed
 )
-
-# from chat.models import Chat
 
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
@@ -61,8 +60,8 @@ class FriendshipRequest(models.Model):
             from_user=self.from_user,
             to_user=self.to_user
         )
-        # create_chat = Chat.objects.create(name='')
-        # create_chat.user_list.add(self.from_user_id, self.to_user_id)
+        create_chat = Chat.objects.create(name='')
+        create_chat.user_list.add(self.from_user_id, self.to_user_id)
 
         FriendshipRequest.objects.filter(
             from_user=self.to_user,

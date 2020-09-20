@@ -1,10 +1,120 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>$Title$</title>
-    </head>
-    <body>
-        $END$
-    </body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'css/chat.css' %}" rel="stylesheet">
+{% endblock css %}
+
+{% block content %}
+    <div class="container">
+        <div class="row gutters">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="card m-0">
+                    <div class="row no-gutters">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-3">
+                            <div id="chats_list" class="users-container">
+                                <div class="chat-search-box">
+                                    <div class="input-group">
+                                        <input class="form-control" placeholder="Search">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-link">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="users">
+                                    {% for chat in chats %}
+                                        {% include "chat/chat-list-item.html" %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9">
+                            <div class="chat-container">
+                                <div class="selected-user">
+                                    <div id="current_user" class="user"></div>
+                                </div>
+
+                                <ul id="messages" class="chat-box">
+                                </ul>
+
+                                <div class="chat-form pt-0 pb-0">
+                                    <div class="row">
+                                        {% csrf_token %}
+                                        <div class="col-1 pr-0">
+                                            <button type="button" class="btn btn-link">
+                                                <i class="material-icons fa-2x">attach_file</i>
+                                            </button>
+                                        </div>
+                                        <div class="col-9 pl-0 pr-0">
+                                            <textarea id="chat_message_input" class="form-control p-2"></textarea>
+                                        </div>
+                                        <div class="col-2 pl-0">
+                                            <button type="button" class="btn btn-link">
+                                                <i class="material-icons fa-2x">mood</i>
+                                            </button>
+                                            <button id="message_submit" type="button" class="btn btn-link">
+                                                <i class="fa fa-paper-plane fa-2x"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block javascript %}
+    <script src="{% static 'js/reconnecting-websocket.js' %}" type="text/javascript"></script>
+    <script>
+        var userId = "{{ request.user.id }}";
+        var uploadImageUrl = "{% url 'upload' %}";
+        $('input:checked').closest("p").hide()
+        {#$(document).ready(function () {#}
+        {#    $('#id_name').keyup(function () {#}
+        {#        if ($('#id_name').val().length === 0) {#}
+        {#            $('#chat_submit').attr('disabled', true);#}
+        {#        } else {#}
+        {#            $('#chat_submit').attr('disabled', false);#}
+        {#        }#}
+        {#    })#}
+        {#    $('#chat_submit').attr('disabled', true);#}
+        {#    $('#id_name').keyup(function () {#}
+        {#        if ($(this).val().length != 0) {#}
+        {#            $('#chat_submit').attr('disabled', false);#}
+        {#        } else {#}
+        {#            $('#chat_submit').attr('disabled', true);#}
+        {#        }#}
+        {#    })#}
+        {#    $('#chat_submit').click(function (e) {#}
+        {#        e.preventDefault();#}
+        {#        $.post('{% url "chat" %}', $('#chat_form').serialize()).done(function (data) {#}
+        {#            $('#chats_list').append(data);#}
+        {#            $('#accounts_list').hide()#}
+        {#            $('#chats_list').show()#}
+        {#        })#}
+        {#    });#}
+        {# });#}
+    </script>
+    <script src="{% static 'js/chat-socket.js' %}"></script>
+    <script>
+        $(function () {
+            $(".heading-compose").click(function () {
+                $(".side-two").css({
+                    "left": "0"
+                });
+            });
+
+            $(".newMessage-back").click(function () {
+                $(".side-two").css({
+                    "left": "-100%"
+                });
+            });
+        })
+    </script>
+{% endblock javascript %}

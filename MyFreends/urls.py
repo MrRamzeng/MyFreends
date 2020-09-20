@@ -12,6 +12,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('', include('allauth.urls')),
     path('', login, name='login'),
+    path('', include('chat.urls'))
 ]
 
 if settings.DEBUG:
