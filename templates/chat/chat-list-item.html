@@ -8,7 +8,7 @@
         </p>
     </li>
 {% else %}
-    <a href="#{{ chat.id }}">
+    <a id="mood" href="#{{ chat.id }}">
         {% for user in chat.user_list.all %}
             {% if user != request.user %}
                 <li id="{{ chat.id }}" class="person" data-chat="person1">

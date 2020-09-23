@@ -11,7 +11,7 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="card m-0">
                     <div class="row no-gutters">
-                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-3">
+                        <div id="user-box" class="col-xl-4 col-lg-4 col-md-4 col-sm-1 col-12">
                             <div id="chats_list" class="users-container">
                                 <div class="chat-search-box">
                                     <div class="input-group">
@@ -31,7 +31,10 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9">
+                        {#                        <div class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel">#}
+                        {#                            <div class="modal-dialog" role="document">#}
+                        {#                                <div class="modal-content">#}
+                        <div id="chat-box" class="col-xl-8 col-lg-8 col-md-8 col-sm-11 col-12">
                             <div class="chat-container">
                                 <div class="selected-user">
                                     <div id="current_user" class="user"></div>
@@ -40,40 +43,80 @@
                                 <ul id="messages" class="chat-box">
                                 </ul>
 
-                                <div class="chat-form pt-0 pb-0">
-                                    <div class="row">
-                                        {% csrf_token %}
-                                        <div class="col-1 pr-0">
-                                            <button type="button" class="btn btn-link">
-                                                <i class="material-icons fa-2x">attach_file</i>
-                                            </button>
-                                        </div>
-                                        <div class="col-9 pl-0 pr-0">
-                                            <textarea id="chat_message_input" class="form-control p-2"></textarea>
-                                        </div>
-                                        <div class="col-2 pl-0">
-                                            <button type="button" class="btn btn-link">
-                                                <i class="material-icons fa-2x">mood</i>
-                                            </button>
-                                            <button id="message_submit" type="button" class="btn btn-link">
-                                                <i class="fa fa-paper-plane fa-2x"></i>
-                                            </button>
-                                        </div>
-                                    </div>
+                                <div class="chat-form p-0 d-flex">
+                                    {% csrf_token %}
+                                    <button type="button" class="btn btn-link">
+                                        <i class="material-icons fa-2x">attach_file</i>
+                                    </button>
+                                    <textarea id="chat_message_input"
+                                              class="form-control p-2"></textarea>
+                                    <button type="button" class="btn btn-link">
+                                        <i class="material-icons fa-2x">mood</i>
+                                    </button>
+
+                                    <button id="message_submit" type="button" class="btn btn-link">
+                                        <i class="fa fa-paper-plane fa-2x"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
+                        {#                                </div>#}
+                        {#                            </div>#}
+                        {#                        </div>#}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 {% endblock content %}
 {% block javascript %}
     <script src="{% static 'js/reconnecting-websocket.js' %}" type="text/javascript"></script>
     <script>
-        var userId = "{{ request.user.id }}";
-        var uploadImageUrl = "{% url 'upload' %}";
+        let myWidth = window.innerWidth;
+        if (myWidth <= 767) {
+            const closeIcon = document.createElement('i');
+            closeIcon.className = 'material-icons';
+            closeIcon.textContent = 'close';
+
+            const closeButton = document.createElement('button');
+            closeButton.className = 'close';
+            $(closeButton).attr('aria-label', 'close');
+            $(closeButton).attr('data-dismiss', 'modal');
+            $(closeButton).append(closeIcon);
+            $(closeButton).css('position', 'absolute');
+            $(closeButton).css('top', '0');
+            $(closeButton).css('right', '0');
+
+            var modalContent = document.createElement('div');
+            modalContent.className = 'modal-content'
+            $(modalContent).append($('#chat-box'));
+            $(modalContent).append(closeButton);
+
+            var modalDialog = document.createElement('div');
+            modalDialog.className = 'modal-dialog';
+            $(modalDialog).attr('role', 'document');
+            $(modalDialog).append(modalContent);
+
+            var modalBox = document.createElement('div')
+            modalBox.classList = 'modal fade';
+            modalBox.id = 'exampleModal';
+            $(modalBox).attr('aria-labelledby', 'exampleModalLabel');
+            $(modalBox).append(modalDialog);
+
+            const moodContainer = document.querySelectorAll('#mood');
+            $(moodContainer).attr('data-target', '#exampleModal');
+            $(moodContainer).attr('data-toggle', 'modal');
+            $('.no-gutters').append(modalBox)
+        } else {
+            $('#mood').removeAttr('data-target');
+            $('#mood').removeAttr('data-toggle');
+            console.log(myWidth <= 767)
+        }
+    </script>
+    <script>
+        const userId = "{{ request.user.id }}";
+        const uploadImageUrl = "{% url 'upload' %}";
         $('input:checked').closest("p").hide()
         {#$(document).ready(function () {#}
         {#    $('#id_name').keyup(function () {#}

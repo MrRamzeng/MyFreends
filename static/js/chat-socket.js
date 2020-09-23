@@ -147,30 +147,51 @@ function displayingMessage() {
     }
 
     function createMessage(data) {
-        var author = data['author'];
-        var msgListTag = document.createElement('li');
-        var userContainer = document.createElement('div');
-        userContainer.className = 'chat-avatar';
-        var authorImgTag = document.createElement('img');
-        authorImgTag.src = data['author_image'];
-        var authorTag = document.createElement('div');
-        authorTag.className = 'chat-name';
-        authorTag.textContent = data['author_fname'];
-        var text = document.createElement('div');
-        text.className = 'chat-text';
-        text.textContent = data['content']
-        userContainer.appendChild(authorImgTag);
-        userContainer.appendChild(authorTag)
-        if (author == userId) {
-            msgListTag.appendChild(userContainer);
-            msgListTag.appendChild(text);
-            msgListTag.className = 'chat-left';
+        var messageContent = document.createElement('div');
+        messageContent.className = 'message-content';
+        messageContent.textContent = data['content'];
+
+        var clockContainer = document.createElement('h5');
+
+        var authorFullName = document.createElement('h4');
+        authorFullName.textContent = data['author_full_name'];
+
+        var divider = document.createElement('hr');
+
+        var infoContainer = document.createElement('div');
+        infoContainer.className = 'info-container';
+
+        var authorImage = document.createElement('img');
+        authorImage.src = data['author_image'];
+
+        var messageContainer = document.createElement('div');
+        messageContainer.className = 'message-container';
+
+        var imageContainer = document.createElement('div');
+        imageContainer.className = 'image-container';
+        imageContainer.appendChild(authorImage);
+
+        var authorContainer = document.createElement('li');
+
+
+        clockContainer.textContent = data['timestamp'];
+
+        infoContainer.appendChild(authorFullName);
+        infoContainer.appendChild(clockContainer);
+
+        messageContainer.appendChild(infoContainer);
+        messageContainer.appendChild(divider);
+        messageContainer.appendChild(messageContent);
+        if (data['author'] == userId) {
+            authorContainer.className = 'sender-container';
+            authorContainer.appendChild(messageContainer);
+            authorContainer.appendChild(imageContainer);
         } else {
-            msgListTag.appendChild(text);
-            msgListTag.appendChild(userContainer);
-            msgListTag.className = 'chat-right';
+            authorContainer.className = 'recipient-container';
+            authorContainer.appendChild(imageContainer);
+            authorContainer.appendChild(messageContainer);
         }
-        document.querySelector('#messages').appendChild(msgListTag);
+        document.querySelector('#messages').appendChild(authorContainer);
 
 
         //     if (data.img) {
@@ -197,7 +218,7 @@ hash = window.location.hash
 
 function displayingForm() {
     $('#current_user').empty()
-    $('#' + chat_id).clone().appendTo("#current_user")
+    $('#' + chat_id).clone('').appendTo("#current_user")
     $('.chat-container').show().css('display', 'flex')
     displayingMessage()
 }

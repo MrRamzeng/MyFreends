@@ -1,14 +1,17 @@
+import datetime
+
 from django.contrib.auth import get_user_model
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 import json
 from .models import Message, Chat
+from tzlocal import get_localzone
 
+local_tz = get_localzone()
 User = get_user_model()
 
 
 class ChatConsumer(WebsocketConsumer):
-
     def fetch_messages(self, data):
         messages = Message.objects.filter(chat=self.chat_id)
         content = {
@@ -57,10 +60,16 @@ class ChatConsumer(WebsocketConsumer):
         content_json = {
             'author': message.author.id,
             'author_image': message.author.image.url,
-            'author_fname': message.author.first_name,
+            'author_full_name': (
+                    message.author.first_name + ' ' + message.author.last_name
+            ),
             'content': message.content,
-            'timestamp': str(message.timestamp)
         }
+        if message.date == datetime.datetime.today().date():
+            timestamp = message.time.strftime('%H:%M')
+        else:
+            timestamp = message.date.strftime('%d.%m.%Y')
+        content_json.update({'timestamp': timestamp})
         if message.img:
             content_json['img'] = message.img.img.url
         if message.smile:

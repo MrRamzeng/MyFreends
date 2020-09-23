@@ -14069,7 +14069,6 @@ fieldset[disabled][disabled] .has-rose .form-control,
 
 .bmd-form-group {
     position: relative;
-    padding-top: 27px;
 }
 
 .bmd-form-group:not(.has-success):not(.has-danger) [class^='bmd-label'].bmd-label-floating,
