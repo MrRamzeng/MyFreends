@@ -38,12 +38,18 @@
                                 </div>
 
                                 <ul id="messages" class="chat-box"></ul>
+                                <div id="preview_image"></div>
 
                                 <div class="chat-form p-0 d-flex">
                                     {% csrf_token %}
                                     <button type="button" class="btn btn-link">
                                         <i class="material-icons fa-2x">attach_file</i>
+                                        <input id="image-input" class="custom-file-input" type="file" accept="image/*">
                                     </button>
+                                    <div class="file-path-wrapper" style="display: none;">
+                                        <input class="file-path validate" type="text"
+                                               placeholder="Upload one or more files">
+                                    </div>
                                     <textarea id="chat_message_input" class="form-control p-2"></textarea>
                                     <button type="button" class="btn btn-link">
                                         <i class="material-icons fa-2x">mood</i>
@@ -103,7 +109,6 @@
         } else {
             $('#mood').removeAttr('data-target');
             $('#mood').removeAttr('data-toggle');
-            console.log(myWidth <= 767)
         }
     </script>
     <script>

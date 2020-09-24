@@ -30,19 +30,19 @@ class ChatConsumer(WebsocketConsumer):
         #         chat_id=chat,
         #         smile_id=data['smileId']
         #     )
-        # elif 'imgId' in data:
-        #     message = Message.objects.create(
-        #         author=author,
-        #         chat_id=chat,
-        #         content=data['message'],
-        #         img_id=data['imgId']
-        #     )
-        # else:
-        message = Message.objects.create(
-            author=author,
-            content=data['message'],
-            chat_id=chat
-        )
+        if 'imgId' in data:
+            message = Message.objects.create(
+                author=author,
+                chat_id=chat,
+                content=data['message'],
+                img_id=data['imgId']
+            )
+        else:
+            message = Message.objects.create(
+                author=author,
+                content=data['message'],
+                chat_id=chat
+            )
         content = {
             'command': 'new_message',
             'message': self.message_to_json(message)

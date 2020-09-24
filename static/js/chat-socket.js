@@ -8,25 +8,26 @@
 //     $('#chats_list').show()
 // }
 
-// function handleFileSelectMulti(evt) {
-//     var files = evt.target.files;
-//     document.getElementById('preview_image').innerHTML = "";
-//     for (var i = 0, f; f = files[i]; i++) {
-//         var reader = new FileReader();
-//
-//         reader.onload = (function (theFile) {
-//             return function (e) {
-//                 var span = document.createElement('span');
-//                 span.innerHTML = ['<img id="', escape(theFile.name),
-//                     '" class="img-thumbnail" src="', e.target.result, '">'].join('');
-//                 document.getElementById('preview_image').insertBefore(span, null);
-//             };
-//         })(f);
-//         reader.readAsDataURL(f);
-//     }
-// }
-//
-// document.getElementById('chat_photo_input').addEventListener('change', handleFileSelectMulti, false);
+function handleFileSelectMulti(evt) {
+    var files = evt.target.files;
+    document.getElementById('preview_image').innerHTML = "";
+    for (var i = 0, f; f = files[i]; i++) {
+        var reader = new FileReader();
+
+        reader.onload = (function (theFile) {
+            return function (e) {
+                const image = document.createElement('img');
+                $(image).attr('id', escape(theFile.name));
+                $(image).attr('class', 'img-thumbnail');
+                $(image).attr('src', e.target.result);
+                $('#preview_image').append(image);
+            };
+        })(f);
+        reader.readAsDataURL(f);
+    }
+}
+
+document.getElementById('image-input').addEventListener('change', handleFileSelectMulti, false);
 
 function getCookie(name) {
     var cookieValue = null;
@@ -60,7 +61,10 @@ $.ajaxSetup({
 function sendMessage(chatSocket, imgId) {
     var messageInputDom = document.querySelector('#chat_message_input');
     var message = messageInputDom.value;
-    if (document.querySelector('#chat_message_input').value != '' || document.querySelector('#chat_photo_input').value != '') {
+    if (
+        document.querySelector('#chat_message_input').value != '' ||
+        document.querySelector('#image-input').value != ''
+    ) {
         chatSocket.send(JSON.stringify({
             'command': 'new_message',
             'message': message,
@@ -70,8 +74,8 @@ function sendMessage(chatSocket, imgId) {
         }));
     }
     messageInputDom.value = '';
-    // $('#chat_photo_input').val('');
-    // $('#messagebox_container #preview_image').empty();
+    $('#image-input').val('');
+    $('#chat-box #preview_image').empty();
 }
 
 function displayingMessage() {
@@ -119,24 +123,24 @@ function displayingMessage() {
     document.querySelector('#message_submit').onclick = function (e) {
         e.stopPropagation();
         e.preventDefault()
-        // var files = $('#chat_photo_input')[0].files[0]
-        // if (files) {
-        //     var fd = new FormData();
-        //     fd.append('img', files);
-        //     $.ajax({
-        //         url: uploadImageUrl,
-        //         type: "POST",
-        //         cache: false,
-        //         processData: false,
-        //         contentType: false,
-        //         data: fd,
-        //         success: function (data) {
-        //             sendMessage(chatSocket, data.id);
-        //         }
-        //     });
-        // } else {
-        sendMessage(chatSocket);
-        // }
+        var files = $('#image-input')[0].files[0]
+        if (files) {
+            var fd = new FormData();
+            fd.append('img', files);
+            $.ajax({
+                url: uploadImageUrl,
+                type: "POST",
+                cache: false,
+                processData: false,
+                contentType: false,
+                data: fd,
+                success: function (data) {
+                    sendMessage(chatSocket, data.id);
+                }
+            });
+        } else {
+            sendMessage(chatSocket);
+        }
         $(document).ready(function () {
             $('#messages').scrollTop(9999)
         });
@@ -194,14 +198,14 @@ function displayingMessage() {
         document.querySelector('#messages').appendChild(authorContainer);
 
 
-        //     if (data.img) {
-        //         var file = document.createElement('img');
-        //         file.setAttribute('src', data.img)
-        //         file.setAttribute('class', 'message-img')
-        //         if (data.message) {
-        //         }
-        //         pTag.appendChild(file)
-        //     }
+        if (data.img) {
+            var file = document.createElement('img');
+            file.setAttribute('src', data.img)
+            file.setAttribute('class', 'message-img')
+            if (data.message) {
+            }
+            messageContent.appendChild(file)
+        }
         //     if (data.smile) {
         //         var file = document.createElement("img");
         //         file.setAttribute('src', data.smile)
