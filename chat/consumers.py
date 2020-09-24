@@ -1,13 +1,12 @@
 import datetime
-
-from django.contrib.auth import get_user_model
-from asgiref.sync import async_to_sync
-from channels.generic.websocket import WebsocketConsumer
 import json
-from .models import Message, Chat
-from tzlocal import get_localzone
 
-local_tz = get_localzone()
+from asgiref.sync import async_to_sync
+from django.contrib.auth import get_user_model
+
+from channels.generic.websocket import WebsocketConsumer
+from .models import Message, Chat
+
 User = get_user_model()
 
 
