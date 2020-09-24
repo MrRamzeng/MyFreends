@@ -26,7 +26,8 @@ textarea {
 }
 
 #chat-box, #user-box, .modal-content {
-    height: calc(100vh - 110px)
+    height: calc(100vh - 110px);
+    min-height: 320px;
 }
 
 .fa-2x {
@@ -386,11 +387,6 @@ span.bmd-form-group textarea {
     .chat-container .recipient-container,
     .chat-container .sender-container {
         margin-bottom: 15px;
-    }
-
-    .chat-container .user img {
-        width: 32px;
-        height: 32px;
     }
 
     .recipient-container .image-container, .sender-container .image-container {
