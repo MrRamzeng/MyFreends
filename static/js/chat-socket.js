@@ -136,17 +136,16 @@ function displayingMessage() {
 
     chatSocket.onmessage = function (e) {
         var data = JSON.parse(e.data);
-        if (data['command'] === 'messages') {
-            for (let i = 0; i < data['messages'].length; i++) {
-                createMessage(data['messages'][i]);
+        if (data.command === 'messages') {
+            for (let i = 0; i < data.messages.length; i++) {
+                createMessage(data.messages[i]);
             }
-        } else if (data['command'] === 'new_message') {
-            createMessage(data['message']);
-            console.log(data['message'].author_full_name)
-            if (data['message'].author != userId) {
-                sendNotification(data['message'].author_full_name, {
-                    body: data['message'].content,
-                    icon: data['message'].author_image,
+        } else if (data.command === 'new_message') {
+            createMessage(data.message);
+            if (data.message.author != userId) {
+                sendNotification(data.message.author_full_name, {
+                    body: data.message.content,
+                    icon: data.message.author_image,
                     dir: 'auto'
                 });
             }
@@ -195,59 +194,57 @@ function displayingMessage() {
 
     function createMessage(data) {
         var messageContent = document.createElement('div');
-        messageContent.className = 'message-content';
-        messageContent.textContent = data['content'];
+        $(messageContent).attr('class', 'message-content');
+        $(messageContent).append(data.content);
 
         var clockContainer = document.createElement('h5');
 
         var authorFullName = document.createElement('h4');
-        authorFullName.textContent = data['author_full_name'];
+        $(authorFullName).append(data.author_full_name);
 
         var divider = document.createElement('hr');
 
         var infoContainer = document.createElement('div');
-        infoContainer.className = 'info-container';
+        $(infoContainer).attr('class', 'info-container');
 
         var authorImage = document.createElement('img');
-        authorImage.src = data['author_image'];
+        $(authorImage).attr('src', data.author_image);
 
         var messageContainer = document.createElement('div');
-        messageContainer.className = 'message-container';
+        $(messageContainer).attr('class', 'message-container');
 
         var imageContainer = document.createElement('div');
-        imageContainer.className = 'image-container';
-        imageContainer.appendChild(authorImage);
+        $(imageContainer).attr('class', 'image-container');
+        $(imageContainer).append(authorImage);
 
         var authorContainer = document.createElement('li');
 
+        $(clockContainer).append(data.timestamp);
 
-        clockContainer.textContent = data['timestamp'];
+        $(infoContainer).append(authorFullName);
+        $(infoContainer).append(clockContainer);
 
-        infoContainer.appendChild(authorFullName);
-        infoContainer.appendChild(clockContainer);
-
-        messageContainer.appendChild(infoContainer);
-        messageContainer.appendChild(divider);
-        messageContainer.appendChild(messageContent);
-        if (data['author'] == userId) {
-            authorContainer.className = 'sender-container';
-            authorContainer.appendChild(messageContainer);
-            authorContainer.appendChild(imageContainer);
+        $(messageContainer).append(infoContainer);
+        $(messageContainer).append(divider);
+        $(messageContainer).append(messageContent);
+        if (data.author == userId) {
+            $(authorContainer).attr('class', 'sender-container');
+            $(authorContainer).append(messageContainer);
+            $(authorContainer).append(imageContainer);
         } else {
-            authorContainer.className = 'recipient-container';
-            authorContainer.appendChild(imageContainer);
-            authorContainer.appendChild(messageContainer);
+            $(authorContainer).attr('class', 'recipient-container');
+            $(authorContainer).append(imageContainer);
+            $(authorContainer).append(messageContainer);
         }
         document.querySelector('#messages').appendChild(authorContainer);
 
 
         if (data.img) {
             var file = document.createElement('img');
-            file.setAttribute('src', data.img)
-            file.setAttribute('class', 'message-img')
+            $(file).attr({'src': data.img, 'class': 'message-img'})
             if (data.message) {
             }
-            messageContent.appendChild(file)
+            $(messageContent).append(file)
         }
         //     if (data.smile) {
         //         var file = document.createElement("img");
@@ -278,6 +275,7 @@ function selectingForm() {
             $('li#' + chat_id).addClass('active-user')
             $('#messages').empty()
             displayingForm()
+            window.location.hash = chat_id;
         }
     });
 }

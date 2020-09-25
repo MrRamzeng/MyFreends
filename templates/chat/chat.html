@@ -74,41 +74,31 @@
     <script>
         if (window.innerWidth <= 767) {
             const closeIcon = document.createElement('i');
-            closeIcon.className = 'material-icons';
-            closeIcon.textContent = 'close';
+            $(closeIcon).attr('class', 'material-icons');
+            $(closeIcon).append('close');
 
             const closeButton = document.createElement('button');
-            closeButton.className = 'close';
-            $(closeButton).attr('aria-label', 'close');
-            $(closeButton).attr('data-dismiss', 'modal');
+            $(closeButton).attr({'class': 'close', 'aria-label': 'close', 'data-dismiss': 'modal'});
+            $(closeButton).css({'position': 'absolute', 'top': '0', 'right': '0'});
             $(closeButton).append(closeIcon);
-            $(closeButton).css('position', 'absolute');
-            $(closeButton).css('top', '0');
-            $(closeButton).css('right', '0');
 
             const modalContent = document.createElement('div');
-            modalContent.className = 'modal-content'
-            $(modalContent).append($('#chat-box'));
-            $(modalContent).append(closeButton);
+            $(modalContent).attr('class', 'modal-content')
+            $(modalContent).append($('#chat-box'), closeButton);
 
             const modalDialog = document.createElement('div');
-            modalDialog.className = 'modal-dialog';
-            $(modalDialog).attr('role', 'document');
+            $(modalDialog).attr({'class': 'modal-dialog', 'role': 'document'});
             $(modalDialog).append(modalContent);
 
             const modalBox = document.createElement('div')
-            modalBox.classList = 'modal fade';
-            modalBox.id = 'exampleModal';
-            $(modalBox).attr('aria-labelledby', 'exampleModalLabel');
+            $(modalBox).attr({'class': 'modal fade', 'id': 'exampleModal', 'aria-labelledby': 'exampleModalLabel'});
             $(modalBox).append(modalDialog);
 
             const moodContainer = document.querySelectorAll('#mood');
-            $(moodContainer).attr('data-target', '#exampleModal');
-            $(moodContainer).attr('data-toggle', 'modal');
+            $(moodContainer).attr({'data-target': '#exampleModal', 'data-toggle': 'modal'});
             $('.no-gutters').append(modalBox)
         } else {
-            $('#mood').removeAttr('data-target');
-            $('#mood').removeAttr('data-toggle');
+            $('#mood').removeAttr('data-target', 'data-toggle');
         }
     </script>
     <script>
