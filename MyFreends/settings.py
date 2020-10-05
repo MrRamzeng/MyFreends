@@ -24,24 +24,11 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
     'friendship',
     'user',
     'chat',
     'channels'
 ]
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
 
 AUTH_USER_MODEL = 'user.User'
 
@@ -107,7 +94,8 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [('h://:p2e320fcbdd6c13803ebcf6fc263082049200d34a9428ae568eca60d8b5a939b7@ec2-54-73-197-4.eu-west-1.compute.amazonaws.com', 17269)],
+            'hosts': [('redis://h:p44bcaa243111281ed61eec787617cde861af2356d1b2b3578606246f7384e365@ec2-54-73-197-4.eu-west-1.compute.amazonaws.com', 29239)],
+        }
     },
 }
 
