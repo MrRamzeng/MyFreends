@@ -24,11 +24,24 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'friendship',
     'user',
     'chat',
     'channels'
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 AUTH_USER_MODEL = 'user.User'
 
@@ -94,8 +107,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [('redis', 6379)],
-        }
+            'hosts': [('h://:p2e320fcbdd6c13803ebcf6fc263082049200d34a9428ae568eca60d8b5a939b7@ec2-54-73-197-4.eu-west-1.compute.amazonaws.com', 17269)],
     },
 }
 
@@ -105,11 +117,11 @@ DATABASES = {
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'postgre',
+        'HOST': 'ec2-54-246-121-32.eu-west-1.compute.amazonaws.com',
         'PORT': 5432,
-        'NAME': 'mf',
-        'USER': 'admin',
-        'PASSWORD': 'password',
+        'NAME': 'ddclab66bp8kh',
+        'USER': 'dmjcawuacicshx',
+        'PASSWORD': '6c52ba598ec29c23adc7ee8467c149304407211683cf75c45246eff579b2d5e9',
     }
 }
 
