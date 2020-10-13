@@ -114,8 +114,9 @@ function sendNotification(title, options) {
 }
 
 function displayingMessage() {
+    var wsProto = window.location.protocol === "https:" ? "wss" : "ws";
     var chatSocket = new ReconnectingWebSocket(
-        'ws://' + window.location.host +
+        wsProto + '://' + window.location.host +
         '/ws/chat/' + chat_id + '/'
     );
 

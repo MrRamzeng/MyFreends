@@ -3,7 +3,7 @@ version: '3'
 services:
     web:
         build: .
-        command: python manage.py runserver 0.0.0.0:8000
+        command: daphne -b 0.0.0.0 -p 8000 MyFreends.asgi:application
         ports: 
             - "8000:8000" 
         depends_on:
@@ -22,6 +22,25 @@ services:
             - POSTGRES_DB=mf
     redis:
         image: redis
+
+    nginx:
+        restart: unless-stopped
+        build: ./nginx/
+        volumes:
+            - ./static:/code/static
+            - ./media:/code/media
+            - ./data/certbot/conf:/etc/letsencrypt
+            - ./data/certbot/www:/var/www/certbot
+        ports:
+            - "80:80"
+            - "443:443"
+        depends_on:
+            - web
+    certbot:
+        image: certbot/certbot
+        volumes:
+            - ./data/certbot/conf:/etc/letsencrypt
+            - ./data/certbot/www:/var/www/certbot
 
 volumes:
     postgres_data:
