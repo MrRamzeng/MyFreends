@@ -116,7 +116,7 @@
                                                  alt="Card image cap">
                                             <div class="card-body">
                                                 {% if friend == request.user %}
-                                                    <a class="btn-link" href="{% url 'user' url=friend.url %}">
+                                                    <a class="btn-link" href="{% url 'my_profile' %}">
                                                 {% else %}
                                                     <a class="btn-link" href="{% url 'view_profile' url=friend.url %}">
                                                 {% endif %}
@@ -134,7 +134,7 @@
                             </div>
                         </div>
                     {% endif %}
-                    <div class="tab-pane gallery" id="images">
+                    <div class="tab-pane gallery {% if not friend_list %} active {% endif %}" id="images">
                         <div class="row">
                             <div class="col-md-6 ml-auto">
                                 <img src="//images.unsplash.com/photo-1524498250077-390f9e378fc0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83079913579babb9d2c94a5941b2e69d&auto=format&fit=crop&w=751&q=80"

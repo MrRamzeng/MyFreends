@@ -14,7 +14,8 @@
                     <div class="col-md-3 ml-auto mr-auto">
                         <div class="profile">
                             <div class="avatar">
-                                <img src="{{ request.user.image.url }}" id="profileImage" class="border rounded-circle border-primary">
+                                <img src="{{ request.user.image.url }}" id="profileImage"
+                                     class="border rounded-circle border-primary">
                                 <form class="hover-container" method="post" enctype="multipart/form-data"
                                       id="formUpload">
                                     <div class="middle rounded-circle justify-content-center">
@@ -32,13 +33,16 @@
                                         {{ form.height }}
                                     </div>
                                 </form>
-                                
-                                <div class="modal fade" id="modalCrop" role="dialog" aria-labelledby="modalCropLabel" aria-hidden="true">
+
+                                <div class="modal fade" id="modalCrop" role="dialog" aria-labelledby="modalCropLabel"
+                                     aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="modalCropLabel">Редактирование изображения</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <h5 class="modal-title" id="modalCropLabel">Редактирование
+                                                    изображения</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -116,6 +120,9 @@
 
                 <div class="tab-content tab-space">
                     <div class="tab-pane active text-center gallery" id="images">
+                        <button class="btn btn-link">
+                            <i class="fa fa-plus"></i>
+                        </button>
                         <div class="row">
                             <div class="col-md-6 ml-auto">
                                 <img src="//images.unsplash.com/photo-1524498250077-390f9e378fc0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83079913579babb9d2c94a5941b2e69d&auto=format&fit=crop&w=751&q=80"
@@ -134,6 +141,9 @@
                     </div>
 
                     <div class="tab-pane text-center gallery" id="videos">
+                        <button class="btn btn-link">
+                            <i class="fa fa-plus"></i>
+                        </button>
                         <div class="row">
                             <div class="col-md-12 ml-auto">
                                 <img src="//images.unsplash.com/photo-1524498250077-390f9e378fc0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83079913579babb9d2c94a5941b2e69d&auto=format&fit=crop&w=751&q=80"
@@ -154,6 +164,9 @@
                     </div>
 
                     <div class="tab-pane text-center gallery" id="music">
+                        <button class="btn btn-link">
+                            <i class="fa fa-plus"></i>
+                        </button>
                         <div class="row">
                             <div class="col-md-3 ml-auto">
                                 <img src="//images.unsplash.com/photo-1504346466600-714572c4b726?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6754ded479383b7e3144de310fa88277&auto=format&fit=crop&w=750&q=80"

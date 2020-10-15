@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import DetailView
 
 from friendship.models import Friend, FriendshipRequest, Block
 from user.models import User
@@ -18,29 +19,34 @@ def user_lists(request):
     return render(request, 'friendship/users/user_lists.html')
 
 
-@login_required(login_url="login")
-def view_profile(request, url):
-    user = User.objects.get(url=url)
-    friend_list = Friend.objects.friends(user)
-    try:
-        sent_request = FriendshipRequest.objects.get(
-            from_user=request.user, to_user=user
-        )
-    except FriendshipRequest.DoesNotExist:
-        sent_request = None
-    try:
-        request_received = FriendshipRequest.objects.get(
-            from_user=user, to_user=request.user
-        )
-    except FriendshipRequest.DoesNotExist:
-        request_received = None
-    friend_counter = Friend.objects.filter(from_user=user).count()
-    args = {
-        'user': user, 'friend_list': friend_list, 'sent_request': sent_request,
-        'request_received': request_received, 'friend_counter': friend_counter,
-        'userPage': 'userPage'
-    }
-    return render(request, 'friendship/users/profile_detail.html', args)
+class ProfileDetailView(DetailView):
+    template_name = 'friendship/users/profile_detail.html'
+
+    def get_object(self):
+        return User.objects.get(url=self.kwargs['url'])
+
+    def get_context_data(self, **kwargs):
+        user = User.objects.get(url=self.kwargs['url'])
+        friend_list = Friend.objects.friends(user)
+        try:
+            sent_request = FriendshipRequest.objects.get(
+                from_user=self.request.user, to_user=user
+            )
+        except FriendshipRequest.DoesNotExist:
+            sent_request = None
+        try:
+            request_received = FriendshipRequest.objects.get(
+                from_user=user, to_user=self.request.user
+            )
+        except FriendshipRequest.DoesNotExist:
+            request_received = None
+        friend_counter = Friend.objects.filter(from_user=user).count()
+        context = {
+            'user': user, 'friend_list': friend_list, 'sent_request': sent_request,
+            'request_received': request_received, 'friend_counter': friend_counter,
+            'userPage': 'userPage'
+        }
+        return context
 
 
 @login_required

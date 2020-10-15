@@ -1,7 +1,9 @@
+from allauth.account.decorators import verified_email_required
 from django.urls import path
 from friendship.views import (
     user_lists, add_friend, cancel_request, accept_friend_request,
-    reject_friend_request, remove_friend, add_block, remove_block, view_profile
+    reject_friend_request, remove_friend, add_block, remove_block,
+    ProfileDetailView
 )
 
 urlpatterns = [
@@ -19,5 +21,8 @@ urlpatterns = [
     path('remove_friend/<str:url>/', remove_friend, name='remove_friend'),
     path('add_block/<str:url>/', add_block, name='add_block'),
     path('remove_block/<str:url>/', remove_block, name='remove_block'),
-    path('profile/<str:url>/', view_profile, name='view_profile'),
+    path(
+        'view/<slug:url>/', verified_email_required(ProfileDetailView.as_view()),
+        name='view_profile'
+    )
 ]
