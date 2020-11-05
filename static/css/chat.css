@@ -23,6 +23,7 @@ textarea {
     overflow: auto;
     padding: 1em;
     height: 100%;
+    margin-top: 10px;
 }
 
 #chat-box, #user-box, .modal-content {

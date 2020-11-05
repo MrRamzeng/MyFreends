@@ -78,13 +78,9 @@ function sendMessage(chatSocket, imgId) {
     $('#chat-box #preview_image').empty();
 }
 
-
 function displayingMessage() {
     var wsProto = window.location.protocol === "https:" ? "wss" : "ws";
-    var chatSocket = new ReconnectingWebSocket(
-        wsProto + '://' + window.location.host +
-        '/ws/chat/' + chat_id + '/'
-    );
+    var chatSocket = new ReconnectingWebSocket(wsProto + '://' + window.location.host + '/ws/chat/' + chat_id + '/');
 
     chatSocket.onopen = function (e) {
         fetchMessages();
@@ -103,13 +99,24 @@ function displayingMessage() {
 
     chatSocket.onmessage = function (e) {
         var data = JSON.parse(e.data);
+        if (data.command === 'count') {
+            $('.badge').text(data.counter)
+        }
         if (data.command === 'messages') {
-            for (let i = 0; i < data.messages.length; i++) {
+            let length = data.messages.length;
+            for (let i = 0; i < length; i++) {
                 createMessage(data.messages[i]);
+            }
+            if (data.messages) {
+                markAsRead(data.messages[length - 1].id, currentUser);
             }
         } else if (data.command === 'new_message') {
             createMessage(data.message);
+            if (data.command === 'count') {
+                $('.badge').text(data.counter)
+            }
             if (data.message.author != userId) {
+                markAsRead(data.message.id, currentUser);
                 if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
                     $('.toast strong').text(data.message.author_full_name);
                     $('.toast img').attr('src', data.message.author_image);
@@ -232,13 +239,19 @@ function displayingMessage() {
             $('#messages').scrollTop(9999)
         });
     }
+
+    function markAsRead(messageId, currentUser) {
+        chatSocket.send(JSON.stringify({
+            'command': 'read_message',
+            'message_id': messageId,
+            'currentUser': currentUser,
+        }))
+    }
 }
 
 hash = window.location.hash
 
 function displayingForm() {
-    $('#current_user').empty()
-    $('#' + chat_id).clone('').appendTo("#current_user")
     $('.chat-container').show().css('display', 'flex')
     displayingMessage()
 }
@@ -249,6 +262,7 @@ function selectingForm() {
         $('.person').removeClass('active-user')
         if ($('#' + chat_id).parent('a').attr('href') != window.location.hash) {
             $('li#' + chat_id).addClass('active-user')
+            $('li .badge').remove()
             $('#messages').empty()
             displayingForm()
             window.location.hash = chat_id;
@@ -269,6 +283,7 @@ if (window.location.hash != '') {
     displayingForm()
     $('li#' + chat_id).addClass('active-user')
     selectingForm()
+
 } else {
     selectingForm()
 }

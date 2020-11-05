@@ -23,7 +23,6 @@ class ChatConsumer(WebsocketConsumer):
         user = data['author']
         author = User.objects.filter(id=user)[0]
         chat = data['chat']
-        chat_id = Chat.objects.get(id=chat)
         # if 'smileId' in data:
         #     message = Message.objects.create(
         #         author=author,
@@ -62,6 +61,7 @@ class ChatConsumer(WebsocketConsumer):
             'author_full_name': (
                     message.author.first_name + ' ' + message.author.last_name
             ),
+            'id': message.id,
             'content': message.content,
         }
         if message.date == datetime.datetime.today().date():
@@ -75,9 +75,17 @@ class ChatConsumer(WebsocketConsumer):
             content_json['smile'] = message.smile.img.url
         return content_json
 
+    def read_message(self, data):
+        message_id = data['message_id']
+        message = Message.objects.get(id=message_id)
+        Message.objects.filter(
+            id__lte=message_id, chat_id=message.chat_id, author=message.author
+        ).update(is_read=True)
+
     commands = {
         'fetch_messages': fetch_messages,
-        'new_message': new_message
+        'new_message': new_message,
+        'read_message': read_message,
     }
 
     def connect(self):

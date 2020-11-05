@@ -5,6 +5,12 @@
     <link href="{% static 'css/chat.css' %}" rel="stylesheet">
 {% endblock css %}
 
+{% block unread_counter %}
+    {% if unread_counter %}
+        <span class="badge badge-primary badge-pill">{{ unread_counter }}</span>
+    {% endif %}
+{% endblock unread_counter %}
+
 {% block content %}
     <div class="container">
         <div class="row gutters">
@@ -33,10 +39,6 @@
 
                         <div id="chat-box" class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
                             <div class="chat-container">
-                                <div class="selected-user">
-                                    <div id="current_user" class="user"></div>
-                                </div>
-
                                 <ul id="messages" class="chat-box"></ul>
                                 <div id="preview_image"></div>
 
@@ -87,6 +89,7 @@
 {% block javascript %}
     <script src="{% static 'js/reconnecting-websocket.js' %}" type="text/javascript"></script>
     <script>
+        var currentUser = {{ request.user.id }}
         audioSrc = "{% static 'Knock.ogg' %}"
         if (window.innerWidth <= 767) {
             const closeIcon = document.createElement('i');

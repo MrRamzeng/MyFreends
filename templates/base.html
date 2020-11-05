@@ -52,6 +52,8 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'chat' %}">
                                     <i class="material-icons">chat</i> Сообщения
+                                    {% block unread_counter %}
+                                    {% endblock unread_counter %}
                                 </a>
                             </li>
 

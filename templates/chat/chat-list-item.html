@@ -15,8 +15,22 @@
                     <div id="{{ chat.id }}" class="user">
                         <img id="{{ chat.id }}" src="{{ user.image.url }}" alt="{{ user.url }}">
                     </div>
-                    <p id="{{ chat.id }}" class="name-time">
-                        <span id="{{ chat.id }}" class="name">{{ user.first_name }} {{ user.last_name }}</span>
+                    <p id="{{ chat.id }}" class="name-time mb-0">
+                        <span id="{{ chat.id }}" class="name">
+                            {{ user.first_name }} {{ user.last_name }}
+                            {% if chat.unread_set %}
+                                <span id="{{ chat.id }}" class="badge badge-primary badge-pill" style="right: 20px; position: absolute">
+                                    {{ chat.unread_set }}
+                                </span>
+                            {% endif %}
+                        </span><br>
+                        <span id="{{ chat.id }}" class="message">
+                            {{ chat.last_message.author.first_name }}: {{ chat.last_message.content|truncatechars:40 }}
+                            <span id="{{ chat.id }}" style="position: absolute; right: 20px;">
+                                {{ chat.last_message.time }}
+                                {{ chat.last_message.date }}
+                            </span>
+                        </span>
                     </p>
                 </li>
             {% endif %}

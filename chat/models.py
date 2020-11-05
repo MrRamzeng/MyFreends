@@ -22,6 +22,12 @@ class Chat(models.Model):
         users = ', '.join(str(user_data) for user_data in self.user_list.all())
         return str(self.name) + " {}".format(users)
 
+    def unread_set(self):
+        return self.message_set.filter(is_read=False).count()
+
+    def last_message(self):
+        return self.message_set.last()
+
 
 class MessageSmile(models.Model):
     img = models.ImageField(upload_to='smiles/')
@@ -43,6 +49,7 @@ class Message(models.Model):
     )
     time = models.TimeField(auto_now_add=True)
     date = models.DateField(auto_now_add=True)
+    is_read = models.BooleanField(default=False, verbose_name='Прочитано')
 
     def __str__(self):
         return self.author.url

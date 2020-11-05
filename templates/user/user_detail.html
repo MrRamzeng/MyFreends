@@ -4,6 +4,13 @@
     {{ request.user.first_name }} {{ request.user.last_name }}
 {% endblock title %}
 
+
+{% block unread_counter %}
+    {% if unread_counter %}
+        <span class="badge badge-primary badge-pill">{{ unread_counter }}</span>
+    {% endif %}
+{% endblock unread_counter %}
+
 {% block content %}
     <div class="page-header header-filter" data-parallax="true"></div>
 
@@ -16,8 +23,8 @@
                             <div class="avatar">
                                 <img src="{{ request.user.image.url }}" id="profileImage"
                                      class="border rounded-circle border-primary">
-                                <form class="hover-container" method="post" enctype="multipart/form-data"
-                                      id="formUpload">
+                                <form action="{% url 'update_image' %}" class="hover-container" method="post"
+                                      enctype="multipart/form-data" id="formUpload">
                                     <div class="middle rounded-circle justify-content-center">
                                         {% csrf_token %}
                                         {% if  request.user.image == 'default.png' %}
@@ -25,12 +32,11 @@
                                         {% else %}
                                             <i class="material-icons">edit</i>
                                         {% endif %}
-                                        {{ form.media }}
-                                        {{ form.image }}
-                                        {{ form.x }}
-                                        {{ form.y }}
-                                        {{ form.width }}
-                                        {{ form.height }}
+                                        <input type="file" name="image" accept="image/*" class="custom-file-input" required="" id="id_image">
+                                        <input type="hidden" name="x" id="id_x">
+                                        <input type="hidden" name="y" id="id_y">
+                                        <input type="hidden" name="width" id="id_width">
+                                        <input type="hidden" name="height" id="id_height">
                                     </div>
                                 </form>
 
